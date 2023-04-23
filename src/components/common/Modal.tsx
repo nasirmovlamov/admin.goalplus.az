@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
@@ -8,7 +7,7 @@ const Modal = ({ modal, setModal }: any) => {
   const [selectedImage, setSelectedImage] = useState();
 
   // This function will be triggered when the file field change
-  const imageChange = (e) => {
+  const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedImage(e.target.files);
     }
@@ -16,12 +15,12 @@ const Modal = ({ modal, setModal }: any) => {
 
   // This function will be triggered when the "Remove This Image" button is clicked
   const removeSelectedImage = () => {
-    setSelectedImage();
+    // setSelectedImage();
   };
 
   useEffect(() => {
     if (!modal) {
-      setSelectedImage();
+      // setSelectedImage();
     }
   }, [modal]);
   //console.log('modal modal', modal)
@@ -46,7 +45,7 @@ const Modal = ({ modal, setModal }: any) => {
           </div>
           <div className="flex justify-between">
             <label className="font-semibold pr-2">Category</label>
-            <select className="border-2 border-[#C4F000] w-[75%] " type="text">
+            <select className="border-2 border-[#C4F000] w-[75%] " >
               <option value="">Choose any Category</option>
               <option value="">Option One</option>
               <option value="">Option Two</option>

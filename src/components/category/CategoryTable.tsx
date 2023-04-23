@@ -55,7 +55,6 @@ const CategoryTable = () => {
       rowClassName: "bg-black-ripon",
     },
     {
-      
       key: "userName",
       dataIndex: "userName",
       title: "Username",
@@ -137,7 +136,7 @@ const CategoryTable = () => {
 
   //Pagination
   const [activePage, setActivePage] = useState(15);
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: any) => {
     setActivePage(pageNumber);
   };
 

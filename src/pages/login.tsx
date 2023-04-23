@@ -173,7 +173,7 @@ export default function Login(props: Props) {
                 type="password"
                 {...register("password")}
                 className="border border-gray-300 rounded-md px-[6px] py-[12px]"
-                pLaplaceholder="Password"
+                placeholder="Password"
               />
               <span className="text-red-500">{errors.password?.message}</span>
             </div>

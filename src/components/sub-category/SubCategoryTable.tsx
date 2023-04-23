@@ -46,7 +46,7 @@ const SubCategoryTable = () => {
 
   //Pagination
   const [activePage, setActivePage] = useState(15);
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber: any) => {
     setActivePage(pageNumber);
   };
 

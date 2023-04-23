@@ -34,8 +34,6 @@ const Layout = ({ children, title = "Sample Title" }: any) => {
               />
               {children}
             </div>
-
-            <Footer />
           </div>
         </Fragment>
       </Navigate>
