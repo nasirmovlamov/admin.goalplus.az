@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faMedal, faTrophy, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = ({ sidebarOutsideClick }: any) => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
@@ -66,6 +66,28 @@ const Nav = ({ sidebarOutsideClick }: any) => {
         </div>
 
         <NavItem
+          hrefLink="/sports"
+          sidebarStatus={sidebarStatus}
+          menuTitle="Sports"
+          subMenu={false}
+          subMenuArray={null}
+        >
+          <div className="w-[50px] h-[50px] flex items-center">
+            <FontAwesomeIcon icon={faMedal} className="text-[40px] ml-2" />
+          </div>
+        </NavItem>
+        {/* <NavItem
+          hrefLink="/leagues"
+          sidebarStatus={sidebarStatus}
+          menuTitle="Leagues"
+          subMenu={false}
+          subMenuArray={null}
+        >
+          <div className="w-[50px] h-[50px] flex items-center">
+            <FontAwesomeIcon icon={faTrophy} className="text-[40px] ml-2" />
+          </div>
+        </NavItem> */}
+        <NavItem
           hrefLink="/users"
           sidebarStatus={sidebarStatus}
           menuTitle="Users"
@@ -73,7 +95,7 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           subMenuArray={null}
         >
           <div className="w-[50px] h-[50px] flex items-center">
-            <FontAwesomeIcon icon={faUser} className="text-[40px] ml-2"/>
+            <FontAwesomeIcon icon={faUser} className="text-[40px] ml-2" />
           </div>
         </NavItem>
 

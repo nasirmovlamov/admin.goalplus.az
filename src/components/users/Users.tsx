@@ -1,6 +1,6 @@
 import React from "react";
 import PageComponentTitle from "../common/PageComponentTitle";
-import UsersTable from "./CategoryTable";
+import { UsersTable } from "./UsersTable";
 
 const Users = () => {
   return (

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import Modal from "../common/Modal";
-import CategoryTitle from "../category/CategoryTitle";
 
-const UsersTitle = () => {
+export const LeaguesTitle = () => {
   const [modal, setModal] = useState(false);
   return (
     <>
       <div className="mr-6">
-        <h1 className="text-4xl font-semibold mb-2">Category</h1>
+        <h1 className="text-4xl font-semibold mb-2">Leagues</h1>
         <h2 className="text-gray-600 ml-0.5">List, view and edit</h2>
       </div>
 
@@ -30,12 +29,10 @@ const UsersTitle = () => {
               d="M12 6v6m0 0v6m0-6h6m-6 0H6"
             />
           </svg>
-          Create new Category
+          Create new Leagues
         </button>
         <Modal modal={modal} setModal={setModal} />
       </div>
     </>
   );
 };
-
-export default CategoryTitle;

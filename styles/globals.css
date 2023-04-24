@@ -16,7 +16,7 @@
   li.js-li.active {
     color: white;
     font-weight: 700;
-    background: #c4f000;
+    background: purple;
     border-radius: 6px;
   }
 
@@ -26,10 +26,22 @@
   }
 
   .pure-modal .panel-heading {
-    @apply #C4F000!important;
+    @apply bg-purple-600!important;
   }
 
   p.product-title {
     margin-top: 0px !important;
+  }
+
+  body {
+    font-family: "Nunito", sans-serif;
+    background-color: red !important;
+  }
+
+  .pagination {
+    justify-content: center;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
   }
 }

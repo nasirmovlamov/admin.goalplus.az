@@ -13,6 +13,10 @@ import { counter } from "@fortawesome/fontawesome-svg-core";
 import { authSlice } from "./authSlice";
 import { playerApi } from "./playerApi";
 import { usersApi } from "./usersApi";
+import { sportsApi } from "./sportsApi";
+import { leaguesApi } from "./leaguesApi";
+import { teamsApi } from "./teamsApi";
+import { playersApi } from "./playersApi";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action) && !action.type.includes("Internal")) {
@@ -33,7 +37,15 @@ export const store = configureStore({
     [teamApi.reducerPath]: teamApi.reducer,
     [playerApi.reducerPath]: playerApi.reducer,
     [usersApi.reducerPath]: usersApi.reducer,
+    [sportsApi.reducerPath]: sportsApi.reducer,
+    [leaguesApi.reducerPath]: leaguesApi.reducer,
+    [teamsApi.reducerPath]: teamsApi.reducer,
+    [playersApi.reducerPath]: playersApi.reducer,
+    players: playersApi.reducer,
+    teams: teamsApi.reducer,
+    leagues: leaguesApi.reducer,
     player: playerApi.reducer,
+    sports: sportsApi.reducer,
     auth: authSlice.reducer,
     team: teamApi.reducer,
     users: usersApi.reducer,
@@ -46,6 +58,10 @@ export const store = configureStore({
     teamApi.middleware,
     playerApi.middleware,
     usersApi.middleware,
+    sportsApi.middleware,
+    leaguesApi.middleware,
+    teamsApi.middleware,
+    playersApi.middleware,
     rtkQueryErrorLogger,
   ],
 });

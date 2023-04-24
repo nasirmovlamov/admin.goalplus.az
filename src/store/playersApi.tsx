@@ -2,8 +2,8 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { RegisterDto } from "./authApi";
 
 // Define a service using a base URL and expected endpoints
-export const usersApi = createApi({
-  reducerPath: "usersApi",
+export const playersApi = createApi({
+  reducerPath: "playersApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://api.goalplus.az/api",
     // global error message toaster
@@ -16,21 +16,22 @@ export const usersApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["users"],
+  tagTypes: ["players"],
   endpoints: (builder) => ({
-    getUsers: builder.query<
+    getPlayers: builder.query<
       any,
       {
         PageNumber: number;
         PageSize: number;
+        teamId: number;
       }
     >({
       query: (body) => ({
-        url: `/users`,
+        url: `/players/team/${body.teamId}`,
         method: "GET",
         params: body,
       }),
-      providesTags: (result, error, id) => [{ type: "users", id: "LIST" }],
+      providesTags: (result, error, id) => [{ type: "players", id: "LIST" }],
       transformResponse(apiResponse, meta: any) {
         return {
           data: apiResponse,
@@ -39,9 +40,9 @@ export const usersApi = createApi({
       },
     }),
 
-    getHeaders: builder.query<any, void>({
+    getPlayersHeaders: builder.query<any, void>({
       query: () => ({
-        url: `/users`,
+        url: `/players`,
         method: "HEAD",
       }),
       transformResponse(apiResponse, meta: any) {

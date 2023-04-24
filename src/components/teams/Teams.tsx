@@ -1,13 +1,13 @@
 import React from "react";
 import PageComponentTitle from "../common/PageComponentTitle";
-import { CategoryTable } from "./CategoryTable";
+import { TeamsTable } from "./TeamsTable";
 
-const Category = () => {
+const Teams = () => {
   return (
     <main className="p-6 sm:p-10 space-y-6">
       <div className="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
         <PageComponentTitle
-          title="Category"
+          title="Teams"
           titleDescription="List, view and edit"
           buttonTitle="Create new Category"
         />
@@ -15,11 +15,11 @@ const Category = () => {
 
       <section className="grid md:grid-cols-1 xl:grid-cols-1 gap-6">
         <div className="flex-grow items-center p-8 bg-white shadow rounded-lg">
-          <CategoryTable />
+          <TeamsTable />
         </div>
       </section>
     </main>
   );
 };
 
-export default Category;
+export default Teams;
