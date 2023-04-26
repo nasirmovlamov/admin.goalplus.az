@@ -38,6 +38,49 @@ export const sportsApi = createApi({
       },
     }),
 
+    getSport: builder.query<any, any>({
+      query: (body) => ({
+        url: `/sports/${body.sportId}`,
+        method: "GET",
+      }),
+    }),
+
+    postSport: builder.mutation<any, any>({
+      query: (body) => ({
+        url: `/sports`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "sports", id: "LIST" }],
+    }),
+
+    putSport: builder.mutation<
+      any,
+      {
+        sportId: any;
+        putData: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/sports/${body.sportId}`,
+        method: "PUT",
+        body: body.putData,
+      }),
+      invalidatesTags: [{ type: "sports", id: "LIST" }],
+    }),
+
+    deleteSport: builder.mutation<
+      any,
+      {
+        sportId: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/sports/${body.sportId}`,
+        method: "DELETE",
+      }),
+    }),
+
     getHeaders: builder.query<any, void>({
       query: () => ({
         url: `/sports`,

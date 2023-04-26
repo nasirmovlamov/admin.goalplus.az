@@ -99,17 +99,17 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           </div>
         </NavItem>
 
-        {/* <NavItem
-          hrefLink="/users"
+        <NavItem
+          hrefLink="/category"
           sidebarStatus={sidebarStatus}
           menuTitle="Category"
           subMenu={false}
           subMenuArray={null}
         >
           <CollectionIcon className="h-10" />
-        </NavItem> */}
+        </NavItem>
 
-        {/* <NavItem
+        <NavItem
           hrefLink="/sub-category"
           sidebarStatus={sidebarStatus}
           menuTitle="Sub-Category"
@@ -117,7 +117,7 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           subMenuArray={null}
         >
           <DuplicateIcon className="h-10" />
-        </NavItem> */}
+        </NavItem>
 
         {/* this menu has child Menu     */}
         {/* <NavItem

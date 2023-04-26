@@ -1,12 +1,18 @@
 import { sportsApi } from "@/store/sportsApi";
 import { data } from "autoprefixer";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Table from "rc-table";
 import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
+import { DeleteSportSureModal } from "./DeleteSportSureModal";
+import { EditSportModal } from "./EditSportModal";
 
 export const SportsTable = () => {
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [sportId, setSportId] = useState("");
   const [
     getSports,
     {
@@ -46,12 +52,29 @@ export const SportsTable = () => {
       dataIndex: "id",
       key: "id",
       className: "text-white bg-gray-600 p-2 border-b-2",
-      render: (id: any) => (
-        <>
-          <Link href={`/leagues/sport/${id}`}>View Leagues</Link> |{" "}
-          <a href={`/leagues/sport/${id}/edit`}>Edit</a> |{" "}
-          <a href="#">Delete</a>
-        </>
+      render: (id: any): any => (
+        <div className="flex gap-4">
+          <Link href={`/leagues/sport/${id}`}>View Leagues</Link> |
+          <button
+            onClick={() => {
+              setSportId(id);
+              setEditModalOpen(true);
+            }}
+            className="bg-green-500 p-2 rounded-md cursor-pointer"
+          >
+            Edit
+          </button>
+          {/* <button
+            onClick={() => {
+              setDeleteModalOpen(true);
+              setSportId(id);
+            }}
+            className="bg-green-500 p-2 rounded-md cursor-pointer"
+          >
+            Delete
+          </button> */}
+          {/* <Link href={`?isModalSportDelete=Open&sportId=${id}`}>Delete</Link> |{" "} */}
+        </div>
       ),
     },
   ];
@@ -69,7 +92,6 @@ export const SportsTable = () => {
   }, []);
 
   useEffect(() => {
-    console.log(sportsData?.pagination);
     if (isSportsSuccess) {
       setPagination(sportsData.pagination);
     }
@@ -91,6 +113,17 @@ export const SportsTable = () => {
 
   return (
     <>
+      <EditSportModal
+        sportId={sportId}
+        modal={isEditModalOpen}
+        setModal={setEditModalOpen}
+      />
+      <DeleteSportSureModal
+        sportId={sportId}
+        modal={isDeleteModalOpen}
+        setModal={setDeleteModalOpen}
+      />
+
       {isSportsLoading ? (
         <div>Sports table is loading...</div>
       ) : sportsError ? (

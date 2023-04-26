@@ -23,7 +23,7 @@ export default function PasswordReset(props: Props) {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<any>({});
+  } = useForm<any>();
 
   const onSubmit = async (data: any) => {
     const params = router.query;

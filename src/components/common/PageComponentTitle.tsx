@@ -11,8 +11,8 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }: any) => {
         <h2 className="text-gray-600 ml-0.5">{titleDescription}</h2>
       </div>
 
-      <div className="flex flex-wrap items-start justify-end -mb-3">
-        {/* <button
+      {/* <div className="flex flex-wrap items-start justify-end -mb-3">
+        <button
           className="inline-flex px-5 py-3 text-white bg-[#C4F000] hover:bg-[#C4F000] focus:bg-[#C4F000] rounded-md ml-6 mb-3"
           onClick={() => setModal(true)}
         >
@@ -31,9 +31,9 @@ const PageComponentTitle = ({ title, titleDescription, buttonTitle }: any) => {
             />
           </svg>
           {buttonTitle}
-        </button> */}
+        </button>
         <Modal modal={modal} setModal={setModal} />
-      </div>
+      </div> */}
     </>
   );
 };
