@@ -39,6 +39,14 @@ export const teamsApi = createApi({
       },
     }),
 
+    deleteTeam: builder.mutation<any, { teamId: number }>({
+      query: (body) => ({
+        url: `/teams/${body.teamId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "teams", id: "LIST" }],
+    }),
+
     getTeamsHeaders: builder.query<any, any>({
       query: (body) => ({
         url: `/teams`,

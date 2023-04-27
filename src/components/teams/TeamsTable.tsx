@@ -29,7 +29,16 @@ export const TeamsTable = () => {
       status: teamsHeadersStatus,
     },
   ] = teamsApi.useLazyGetTeamsHeadersQuery();
-
+  const [
+    deleteTeamApi,
+    {
+      data: deleteTeamData,
+      isLoading: isDeleteTeamLoading,
+      error: deleteTeamError,
+      isSuccess: isDeleteTeamSuccess,
+      isError: isDeleteTeamError,
+    },
+  ] = teamsApi.useDeleteTeamMutation();
   const [pageSize, setPageSize] = useState(10);
   const [pagination, setPagination] = useState({
     CurrentPage: 1,
@@ -152,10 +161,21 @@ export const TeamsTable = () => {
       width: 400,
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
-        <>
-          <Link href={`/teams/players/${id}`}>View Players</Link> |{" "}
-          <a href="#">Edit</a> | <a href="#">Delete</a>
-        </>
+        <div className="flex gap-2 w-full justify-center">
+          <Link href={`/teams/players/${id}`}>
+            <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-1 rounded">
+              View Players
+            </button>
+          </Link>
+          <button
+            onClick={() => {
+              deleteTeam(id);
+            }}
+            className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
+          >
+            Delete team
+          </button>
+        </div>
       ),
     },
   ];
@@ -206,6 +226,14 @@ export const TeamsTable = () => {
       PageSize: pageSize,
       leagueId: router.query.id as any,
     });
+  };
+
+  const deleteTeam = async (id: any) => {
+    try {
+      await deleteTeamApi({
+        teamId: id,
+      });
+    } catch (error) {}
   };
 
   return (

@@ -1,12 +1,15 @@
 import { playersApi } from "@/store/playersApi";
-import { data } from "autoprefixer";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import Table from "rc-table";
 import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
+import { DeletePlayerSureModal } from "./DeletePlayerSureModal";
 
 export const PlayersTable = () => {
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [playerId, setPlayerId] = useState();
   const router = useRouter();
   const [
     getPlayers,
@@ -17,6 +20,7 @@ export const PlayersTable = () => {
       isSuccess: isPlayersSuccess,
     },
   ] = playersApi.useLazyGetPlayersQuery();
+
   const [
     getPlayersHeaders,
     {
@@ -158,13 +162,29 @@ export const PlayersTable = () => {
     },
     {
       title: "Operations",
-      dataIndex: "",
+      dataIndex: "id",
       key: "operations",
       className: "text-white bg-gray-600 p-2 border-b-2",
-      render: () => (
-        <>
-          <a href="#">View</a> | <a href="#">Edit</a> | <a href="#">Delete</a>
-        </>
+      render: (id: any) => (
+        <div className="flex gap-2">
+          <button
+            onClick={() => {
+              console.log(id);
+            }}
+            className=" bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-1 rounded"
+          >
+            Confirm Player
+          </button>
+          <button
+            onClick={() => {
+              setDeleteModalOpen(true);
+              setPlayerId(id);
+            }}
+            className="bg-red-500 p-2 rounded-md"
+          >
+            Delete User
+          </button>
+        </div>
       ),
     },
   ];
@@ -234,6 +254,12 @@ export const PlayersTable = () => {
           className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
         />
       )}
+
+      <DeletePlayerSureModal
+        playerId={playerId}
+        modal={isDeleteModalOpen}
+        setModal={setDeleteModalOpen}
+      />
 
       <div className="flex justify-center gap-4 mt-2 items-center">
         <select

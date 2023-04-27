@@ -40,6 +40,14 @@ export const playersApi = createApi({
       },
     }),
 
+    deletePlayer: builder.mutation<any, { playerId: number }>({
+      query: (body) => ({
+        url: `/players/${body.playerId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "players", id: "LIST" }],
+    }),
+
     getPlayersHeaders: builder.query<any, void>({
       query: () => ({
         url: `/players`,
