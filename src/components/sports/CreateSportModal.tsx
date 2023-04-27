@@ -5,10 +5,10 @@ import { toast } from "react-hot-toast";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import ErrorMapper from "../common/ErrorMapper";
+import { useRouter } from "next/router";
 
 export const CreateSportModal = ({ modal, setModal }: any) => {
-  //For Image Preview
-  const [selectedImage, setSelectedImage] = useState();
+  const router = useRouter();
   const {
     register,
     formState: { errors },
@@ -24,20 +24,9 @@ export const CreateSportModal = ({ modal, setModal }: any) => {
       error: errorSports,
     },
   ] = sportsApi.usePostSportMutation();
-  // This function will be triggered when the file field change
-  const imageChange = (e: any) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setSelectedImage(e.target.files);
-    }
-  };
-
-  // This function will be triggered when the "Remove This Image" button is clicked
-  const removeSelectedImage = () => {
-    // setSelectedImage();
-  };
 
   const onSubmit = async (data: any) => {
-    console.log(data);
+
     try {
       await sportsPostApi(data);
       toast.success("Sport Created Successfully");
@@ -46,12 +35,6 @@ export const CreateSportModal = ({ modal, setModal }: any) => {
     }
   };
 
-  useEffect(() => {
-    if (!modal) {
-      // setSelectedImage();
-    }
-  }, [modal]);
-  //console.log('modal modal', modal)
   return (
     <>
       <PureModal

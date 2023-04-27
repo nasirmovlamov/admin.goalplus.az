@@ -3,6 +3,7 @@ import PageComponentTitle from "../common/PageComponentTitle";
 import { SportsTable } from "./SportsTable";
 import Modal from "../common/Modal";
 import { CreateSportModal } from "./CreateSportModal";
+import { CreateLeagueModal } from "../leagues/CreateLeagueModal";
 
 export const Sports = () => {
   const [modal, setModal] = useState(false);

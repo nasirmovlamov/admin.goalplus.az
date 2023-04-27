@@ -39,6 +39,61 @@ export const leaguesApi = createApi({
       },
     }),
 
+    postLeague: builder.mutation<
+      any,
+      {
+        sportId: string;
+        postData: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/leagues?sportId=${body.sportId}`,
+        method: "POST",
+        body: body.postData,
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "leagues", id: "LIST" }],
+    }),
+
+    putLeague: builder.mutation<
+      any,
+      {
+        leagueId: any;
+        putData: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/leagues/${body.leagueId}`,
+        method: "PUT",
+        body: body.putData,
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "leagues", id: "LIST" }],
+    }),
+
+    getLeague: builder.query<
+      any,
+      {
+        leagueId: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/leagues/${body.leagueId}`,
+        method: "GET",
+      }),
+    }),
+
+    deleteLeague: builder.mutation<
+      any,
+      {
+        leagueId: number;
+      }
+    >({
+      query: (body) => ({
+        url: `/leagues/${body.leagueId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "leagues", id: "LIST" }],
+    }),
+
     getLeaguesHeaders: builder.query<any, any>({
       query: (body) => ({
         url: `/leagues`,

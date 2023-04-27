@@ -49,7 +49,7 @@ export const EditSportModal = ({ sportId, modal, setModal }: any) => {
         sportId: sportId,
         putData: data as any,
       });
-      toast.success("Sport Created Successfully");
+      toast.success("Sport Updated Successfully");
       setModal(false);
     } catch (error) {
       toast.error("Something went wrong");
