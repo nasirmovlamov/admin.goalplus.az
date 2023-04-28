@@ -26,7 +26,7 @@ export const UsersTable = () => {
     status: usersHeadersStatus,
     refetch: usersHeadersRefetch,
   } = usersApi.useGetHeadersQuery();
-  const { formState, register, handleSubmit } = useForm();
+  const { formState, register, handleSubmit, setValue } = useForm();
   const [pageSize, setPageSize] = useState(25);
   const [pagination, setPagination] = useState({
     CurrentPage: 1,
@@ -180,6 +180,7 @@ export const UsersTable = () => {
     getUsers({
       PageNumber: pageNumber,
       PageSize: pageSize,
+      SearchTerm: SearchTerm,
     });
   };
 
@@ -204,6 +205,21 @@ export const UsersTable = () => {
           />
           <button className="bg-gray-800 text-white px-2 rounded-md h-[34px]">
             Search
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setValue("SearchTerm", "");
+              setSearchTerm("");
+              getUsers({
+                PageNumber: pagination.CurrentPage,
+                PageSize: pageSize,
+              });
+            }}
+            className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
+          >
+            Clear Filter
           </button>
         </div>
       </form>
