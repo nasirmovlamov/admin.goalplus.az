@@ -7,8 +7,33 @@ import { authSlice } from "@/store/authSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useRouter } from "next/router";
 import Navigate from "../Navigate";
+import { authApi } from "@/store/authApi";
 
 const Layout = ({ children, title = "Sample Title" }: any) => {
+  const router = useRouter();
+  const [
+    refreshTokenApi,
+    {
+      data: refreshTokenData,
+      isLoading: isRefreshTokenLoading,
+      error: refreshTokenError,
+      isSuccess: isRefreshTokenSuccess,
+    },
+  ] = authApi.useRefreshTokenMutation();
+  useEffect(() => {
+    if (
+      localStorage.getItem("accessToken") &&
+      localStorage.getItem("refreshToken")
+    ) {
+      refreshTokenApi({
+        accessToken: localStorage.getItem("accessToken")!,
+        refreshToken: localStorage.getItem("refreshToken")!,
+      });
+    } else {
+      localStorage.clear();
+      router.push("/login");
+    }
+  }, []);
   const dispatch = useAppDispatch();
 
   //console.log("layout", title)

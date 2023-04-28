@@ -3,6 +3,7 @@ import { data } from "autoprefixer";
 import Link from "next/link";
 import Table from "rc-table";
 import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 
@@ -25,7 +26,7 @@ export const UsersTable = () => {
     status: usersHeadersStatus,
     refetch: usersHeadersRefetch,
   } = usersApi.useGetHeadersQuery();
-
+  const { formState, register, handleSubmit } = useForm();
   const [pageSize, setPageSize] = useState(25);
   const [pagination, setPagination] = useState({
     CurrentPage: 1,
@@ -192,21 +193,20 @@ export const UsersTable = () => {
 
   return (
     <>
-      <div className="flex gap-2 my-2">
-        <input
-          value={SearchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="enter search text"
-          type="text"
-          className="bg-gray-800 text-white px-2 rounded-md h-[34px] max-w-[500px] w-full"
-        />
-        <button
-          onClick={handleSearch}
-          className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
-        >
-          Search
-        </button>
-      </div>
+      <form action="" onSubmit={handleSubmit(handleSearch)}>
+        <div className="flex gap-2 my-2">
+          <input
+            {...register("SearchTerm")}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="enter search text"
+            type="text"
+            className="bg-gray-800 text-white px-2 rounded-md h-[34px] max-w-[500px] w-full"
+          />
+          <button className="bg-gray-800 text-white px-2 rounded-md h-[34px]">
+            Search
+          </button>
+        </div>
+      </form>
       {isUsersLoading ? (
         <div>Users table is loading...</div>
       ) : usersError ? (

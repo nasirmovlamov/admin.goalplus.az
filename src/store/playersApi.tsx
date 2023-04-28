@@ -40,6 +40,24 @@ export const playersApi = createApi({
       },
     }),
 
+    confirmPlayerApi: builder.mutation<
+      any,
+      {
+        playerId: number;
+        putData: {
+          activate?: boolean;
+          paid?: boolean;
+        };
+      }
+    >({
+      query: (body) => ({
+        url: `/players/${body.playerId}/activation`,
+        method: "PUT",
+        body: body.putData,
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "players", id: "LIST" }],
+    }),
+
     deletePlayer: builder.mutation<any, { playerId: number }>({
       query: (body) => ({
         url: `/players/${body.playerId}`,

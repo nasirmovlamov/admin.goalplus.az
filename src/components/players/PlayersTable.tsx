@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { DeletePlayerSureModal } from "./DeletePlayerSureModal";
+import { title } from "process";
 
 export const PlayersTable = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -20,7 +21,15 @@ export const PlayersTable = () => {
       isSuccess: isPlayersSuccess,
     },
   ] = playersApi.useLazyGetPlayersQuery();
-
+  const [
+    confirmPlayerApi,
+    {
+      data: confirmPlayerData,
+      isLoading: isConfirmPlayerLoading,
+      error: confirmPlayerError,
+      isSuccess: isConfirmPlayerSuccess,
+    },
+  ] = playersApi.useConfirmPlayerApiMutation();
   const [
     getPlayersHeaders,
     {
@@ -133,7 +142,11 @@ export const PlayersTable = () => {
       dataIndex: "playerDetails",
       title: "IDCARD",
       render: (playerDetails: any) => (
-        <a href={playerDetails?.identificationUrl} download>
+        <a
+          className="text-blue-500 underline"
+          href={playerDetails?.identificationUrl}
+          target="_blank"
+        >
           {" "}
           link to view{" "}
         </a>
@@ -147,9 +160,13 @@ export const PlayersTable = () => {
       dataIndex: "playerDetails",
       title: "SO Certificate",
       render: (playerDetails: any) => (
-        <a href={playerDetails?.schoolCertificateUrl} download>
+        <a
+          className="text-blue-500 underline"
+          href={playerDetails?.schoolCertificateUrl}
+          target="_blank"
+        >
           {" "}
-          link to view{" "}
+          {playerDetails?.schoolCertificateUrl && "link to view"}{" "}
         </a>
       ),
       width: 100,
@@ -172,23 +189,71 @@ export const PlayersTable = () => {
     },
     {
       title: "Operations",
-      dataIndex: "id",
+      dataIndex: "",
       key: "operations",
       className: "text-white bg-gray-600 p-2 border-b-2",
-      render: (id: any) => (
+      render: (data: any) => (
         <div className="flex gap-2">
-          <button
+          <div
             onClick={() => {
-              console.log(id);
+              console.log(data);
             }}
-            className=" bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-1 rounded"
+            className="flex justify-center items-center gap-2 bg-gray-500 text-white font-bold px-4 py-1 rounded"
           >
             Confirm Player
-          </button>
+            <input
+              checked={data.activate}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  confirmPlayerApi({
+                    playerId: data.id,
+                    putData: { activate: true, paid: data.paid },
+                  });
+                } else {
+                  confirmPlayerApi({
+                    playerId: data.id,
+                    putData: { activate: false, paid: data.paid },
+                  });
+                }
+              }}
+              className="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-neutral-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-success checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-success checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-success checked:focus:bg-success checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-success dark:checked:after:bg-success dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+            />
+          </div>
+          <div
+            onClick={() => {
+              console.log(data);
+            }}
+            className="flex justify-center items-center gap-2 bg-gray-500 text-white font-bold px-4 py-1 rounded"
+          >
+            User has paid
+            <input
+              checked={data.paid}
+              onChange={(e) => {
+                if (e.target.checked) {
+                  confirmPlayerApi({
+                    playerId: data.id,
+                    putData: { paid: true, activate: data.activate },
+                  });
+                } else {
+                  confirmPlayerApi({
+                    playerId: data.id,
+                    putData: { paid: false, activate: data.activate },
+                  });
+                }
+              }}
+              className="mr-2 mt-[0.3rem] h-3.5 w-8 appearance-none rounded-[0.4375rem] bg-neutral-300 before:pointer-events-none before:absolute before:h-3.5 before:w-3.5 before:rounded-full before:bg-transparent before:content-[''] after:absolute after:z-[2] after:-mt-[0.1875rem] after:h-5 after:w-5 after:rounded-full after:border-none after:bg-neutral-100 after:shadow-[0_0px_3px_0_rgb(0_0_0_/_7%),_0_2px_2px_0_rgb(0_0_0_/_4%)] after:transition-[background-color_0.2s,transform_0.2s] after:content-[''] checked:bg-success checked:after:absolute checked:after:z-[2] checked:after:-mt-[3px] checked:after:ml-[1.0625rem] checked:after:h-5 checked:after:w-5 checked:after:rounded-full checked:after:border-none checked:after:bg-success checked:after:shadow-[0_3px_1px_-2px_rgba(0,0,0,0.2),_0_2px_2px_0_rgba(0,0,0,0.14),_0_1px_5px_0_rgba(0,0,0,0.12)] checked:after:transition-[background-color_0.2s,transform_0.2s] checked:after:content-[''] hover:cursor-pointer focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[3px_-1px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] focus:after:absolute focus:after:z-[1] focus:after:block focus:after:h-5 focus:after:w-5 focus:after:rounded-full focus:after:content-[''] checked:focus:border-success checked:focus:bg-success checked:focus:before:ml-[1.0625rem] checked:focus:before:scale-100 checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:bg-neutral-600 dark:after:bg-neutral-400 dark:checked:bg-success dark:checked:after:bg-success dark:focus:before:shadow-[3px_-1px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:before:shadow-[3px_-1px_0px_13px_#3b71ca]"
+              type="checkbox"
+              role="switch"
+              id="flexSwitchCheckDefault"
+            />
+          </div>
           <button
             onClick={() => {
               setDeleteModalOpen(true);
-              setPlayerId(id);
+              setPlayerId(data.id);
             }}
             className="bg-red-500 p-2 rounded-md"
           >
