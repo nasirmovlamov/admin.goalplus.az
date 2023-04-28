@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 
 export const UsersTable = () => {
+  const [SearchTerm, setSearchTerm] = useState("");
   const [
     getUsers,
     {
@@ -25,10 +26,10 @@ export const UsersTable = () => {
     refetch: usersHeadersRefetch,
   } = usersApi.useGetHeadersQuery();
 
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(25);
   const [pagination, setPagination] = useState({
     CurrentPage: 1,
-    TotalPages: 10,
+    TotalPages: 25,
     TotalCount: 0,
   });
 
@@ -162,7 +163,6 @@ export const UsersTable = () => {
   }, [isUsersHeadersSuccess]);
 
   useEffect(() => {
-    console.log(usersData?.pagination);
     if (isUsersSuccess) {
       setPagination(usersData.pagination);
     }
@@ -182,8 +182,31 @@ export const UsersTable = () => {
     });
   };
 
+  const handleSearch = () => {
+    getUsers({
+      PageNumber: pagination.CurrentPage,
+      PageSize: pageSize,
+      SearchTerm: SearchTerm,
+    });
+  };
+
   return (
     <>
+      <div className="flex gap-2 my-2">
+        <input
+          value={SearchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="enter search text"
+          type="text"
+          className="bg-gray-800 text-white px-2 rounded-md h-[34px] max-w-[500px] w-full"
+        />
+        <button
+          onClick={handleSearch}
+          className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
+        >
+          Search
+        </button>
+      </div>
       {isUsersLoading ? (
         <div>Users table is loading...</div>
       ) : usersError ? (

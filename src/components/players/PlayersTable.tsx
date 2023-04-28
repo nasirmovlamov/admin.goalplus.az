@@ -132,7 +132,12 @@ export const PlayersTable = () => {
       key: "playerDetails",
       dataIndex: "playerDetails",
       title: "IDCARD",
-      render: (playerDetails: any) => playerDetails?.identificationUrl,
+      render: (playerDetails: any) => (
+        <a href={playerDetails?.identificationUrl} download>
+          {" "}
+          link to view{" "}
+        </a>
+      ),
       width: 100,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
@@ -141,7 +146,12 @@ export const PlayersTable = () => {
       key: "playerDetails",
       dataIndex: "playerDetails",
       title: "SO Certificate",
-      render: (playerDetails: any) => playerDetails?.schoolCertificateUrl,
+      render: (playerDetails: any) => (
+        <a href={playerDetails?.schoolCertificateUrl} download>
+          {" "}
+          link to view{" "}
+        </a>
+      ),
       width: 100,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",

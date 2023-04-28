@@ -23,6 +23,7 @@ export const usersApi = createApi({
       {
         PageNumber: number;
         PageSize: number;
+        SearchTerm?: string;
       }
     >({
       query: (body) => ({
