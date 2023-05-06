@@ -2,9 +2,9 @@ import { teamsApi } from "@/store/teamsApi";
 import { data } from "autoprefixer";
 import Link from "next/link";
 import router, { useRouter } from "next/router";
-import { title } from "process";
 import Table from "rc-table";
 import React, { use, useEffect, useState } from "react";
+import { render } from "react-dom";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 
@@ -71,6 +71,7 @@ export const TeamsTable = () => {
           />
         ),
     },
+
     {
       key: "name",
       dataIndex: "name",
@@ -120,6 +121,36 @@ export const TeamsTable = () => {
       title: "SO Number",
       render: (teamDetails: any) => teamDetails?.schoolOfficial?.number,
       width: 50,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      key: "teamDetails",
+      dataIndex: "teamDetails",
+      title: "SO Position",
+      render: (teamDetails: any) => teamDetails?.schoolOfficial?.position,
+      width: 50,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      key: "teamDetails",
+      dataIndex: "teamDetails",
+      title: "SO Certificate",
+      render: (teamDetails: any) => (
+        <>
+          {teamDetails?.schoolImage && (
+            <a
+              className="text-blue-500 underline"
+              href={teamDetails?.schoolImage}
+              target="_blank"
+            >
+              link to view{" "}
+            </a>
+          )}
+        </>
+      ),
+      width: 100,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
     },
