@@ -36,6 +36,23 @@ export const paymentApi = createApi({
       }),
     }),
 
+    getTeamPayments: builder.query<
+      any,
+      {
+        teamId: number;
+        PageNumber?: number;
+        PageSize?: number;
+        orderBy?: any;
+        Fields?: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/payments/team/${body.teamId}`,
+        method: "GET",
+        params: body,
+      }),
+    }),
+
     getPaymentsHeaders: builder.query<any, void>({
       query: () => ({
         url: `/payments`,

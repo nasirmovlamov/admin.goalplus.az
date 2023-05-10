@@ -198,6 +198,11 @@ export const TeamsTable = () => {
               View Players
             </button>
           </Link>
+          <Link href={`/payment/team/${id}`}>
+            <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-1 rounded">
+              View Payments
+            </button>
+          </Link>
           <button
             onClick={() => {
               deleteTeam(id);
