@@ -217,7 +217,7 @@ export const TeamPaymentTable = () => {
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
         <div className="flex gap-4">
-          <Link href={`/teams/payment/${id}`}>View Teams</Link> | |
+          {/* <Link href={`/teams/payment/${id}`}>View Teams</Link> | |
           <button
             onClick={() => {
               setPaymentId(id);
@@ -225,7 +225,7 @@ export const TeamPaymentTable = () => {
             className="bg-green-500 p-2 rounded-md cursor-pointer"
           >
             Edit
-          </button>
+          </button> */}
         </div>
       ),
     },
