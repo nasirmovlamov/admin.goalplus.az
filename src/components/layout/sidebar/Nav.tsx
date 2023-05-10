@@ -8,7 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedal, faTrophy, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faDollar, faMedal, faTrophy, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = ({ sidebarOutsideClick }: any) => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
@@ -96,6 +96,18 @@ const Nav = ({ sidebarOutsideClick }: any) => {
         >
           <div className="w-[50px] h-[50px] flex items-center">
             <FontAwesomeIcon icon={faUser} className="text-[40px] ml-2" />
+          </div>
+        </NavItem>
+
+        <NavItem
+          hrefLink="/payment"
+          sidebarStatus={sidebarStatus}
+          menuTitle="Payment"
+          subMenu={false}
+          subMenuArray={null}
+        >
+          <div className="w-[50px] h-[50px] flex items-center">
+            <FontAwesomeIcon icon={faDollar} className="text-[40px] ml-2" />
           </div>
         </NavItem>
 

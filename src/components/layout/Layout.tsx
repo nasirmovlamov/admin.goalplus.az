@@ -21,22 +21,22 @@ const Layout = ({ children, title = "Sample Title" }: any) => {
     },
   ] = authApi.useRefreshTokenMutation();
   useEffect(() => {
-    if (
-      localStorage.getItem("accessToken") &&
-      localStorage.getItem("refreshToken")
-    ) {
-      refreshTokenApi({
-        accessToken: localStorage.getItem("accessToken")!,
-        refreshToken: localStorage.getItem("refreshToken")!,
-      });
-    } else {
-      localStorage.clear();
-      router.push("/login");
+    console.log("Hello")
+    if (router.isReady) {
+      if (
+        localStorage.getItem("accessToken") &&
+        localStorage.getItem("refreshToken")
+      ) {
+        refreshTokenApi({
+          accessToken: localStorage.getItem("accessToken")!,
+          refreshToken: localStorage.getItem("refreshToken")!,
+        });
+      } else {
+        // localStorage.clear();
+        // router.push("/login");
+      }
     }
   }, []);
-  const dispatch = useAppDispatch();
-
-  //console.log("layout", title)
   const [mobileNavsidebar, setMobileNavsidebar] = useState(false);
 
   return (

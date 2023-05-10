@@ -65,6 +65,8 @@ export const authSlice = createSlice({
           accessToken: action.payload.accessToken,
           refreshToken: action.payload.refreshToken,
         };
+        localStorage.setItem("accessToken", action.payload.accessToken);
+        localStorage.setItem("refreshToken", action.payload.refreshToken);
         state.user = action.payload.user;
       }
     );
@@ -77,6 +79,23 @@ export const authSlice = createSlice({
             accessToken: action.payload.accessToken,
             refreshToken: action.payload.refreshToken,
           };
+          localStorage.setItem("accessToken", action.payload.accessToken);
+          localStorage.setItem("refreshToken", action.payload.refreshToken);
+          state.user = action.payload.refreshToken;
+        }
+      }
+    );
+
+    builder.addMatcher(
+      authApi.endpoints.refreshToken.matchFulfilled,
+      (state, action) => {
+        if (action.payload) {
+          state.jwt = {
+            accessToken: action.payload.accessToken,
+            refreshToken: action.payload.refreshToken,
+          };
+          localStorage.setItem("accessToken", action.payload.accessToken);
+          localStorage.setItem("refreshToken", action.payload.refreshToken);
           state.user = action.payload.refreshToken;
         }
       }

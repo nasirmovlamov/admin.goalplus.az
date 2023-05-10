@@ -17,6 +17,7 @@ import { sportsApi } from "./sportsApi";
 import { leaguesApi } from "./leaguesApi";
 import { teamsApi } from "./teamsApi";
 import { playersApi } from "./playersApi";
+import { paymentApi } from "./paymentApi";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action) && !action.type.includes("Internal")) {
@@ -41,6 +42,7 @@ export const store = configureStore({
     [leaguesApi.reducerPath]: leaguesApi.reducer,
     [teamsApi.reducerPath]: teamsApi.reducer,
     [playersApi.reducerPath]: playersApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
     players: playersApi.reducer,
     teams: teamsApi.reducer,
     leagues: leaguesApi.reducer,
@@ -49,6 +51,7 @@ export const store = configureStore({
     auth: authSlice.reducer,
     team: teamApi.reducer,
     users: usersApi.reducer,
+    payment: paymentApi.reducer,
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.
@@ -62,6 +65,7 @@ export const store = configureStore({
     leaguesApi.middleware,
     teamsApi.middleware,
     playersApi.middleware,
+    paymentApi.middleware,
     rtkQueryErrorLogger,
   ],
 });
