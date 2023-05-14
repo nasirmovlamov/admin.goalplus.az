@@ -8,7 +8,13 @@ import {
 import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDollar, faMedal, faTrophy, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDollar,
+  faMedal,
+  faScaleBalanced,
+  faTrophy,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Nav = ({ sidebarOutsideClick }: any) => {
   const [sidebarStatus, setSidebarStatus] = useState(false);
@@ -111,7 +117,7 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           </div>
         </NavItem>
 
-        <NavItem
+        {/* <NavItem
           hrefLink="/category"
           sidebarStatus={sidebarStatus}
           menuTitle="Category"
@@ -119,7 +125,7 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           subMenuArray={null}
         >
           <CollectionIcon className="h-10" />
-        </NavItem>
+        </NavItem> */}
 
         <NavItem
           hrefLink="/sub-category"

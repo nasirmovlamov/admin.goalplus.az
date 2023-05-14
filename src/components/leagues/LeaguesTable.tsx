@@ -214,7 +214,8 @@ export const LeaguesTable = () => {
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
         <div className="flex gap-4">
-          <Link href={`/teams/league/${id}`}>View Teams</Link> | |
+          <Link href={`/teams/league/${id}`}>View Teams</Link> |
+          <Link href={`/leagues/rules/${id}`}>View Rules</Link>|
           <button
             onClick={() => {
               setLeagueId(id);

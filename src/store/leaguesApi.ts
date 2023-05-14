@@ -15,7 +15,7 @@ export const leaguesApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["leagues"],
+  tagTypes: ["leagues", "rules"],
   endpoints: (builder) => ({
     getLeagues: builder.query<
       any,
@@ -79,6 +79,34 @@ export const leaguesApi = createApi({
         url: `/leagues/${body.leagueId}`,
         method: "GET",
       }),
+    }),
+
+    getRules: builder.query<
+      any,
+      {
+        leagueId: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/leagues/${body.leagueId}/files/rules`,
+        method: "GET",
+      }),
+      providesTags: (result, error, id) => [{ type: "rules", id: "LIST" }],
+    }),
+
+    postRules: builder.mutation<
+      any,
+      {
+        leagueId: any;
+        postData: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/leagues/${body.leagueId}/files/rules`,
+        method: "POST",
+        body: body.postData,
+      }),
+      invalidatesTags: (result, error, id) => [{ type: "rules", id: "LIST" }],
     }),
 
     deleteLeague: builder.mutation<

@@ -172,6 +172,14 @@ export const TeamsTable = () => {
       rowClassName: "bg-black-ripon",
     },
     {
+      key: "paymentAmount",
+      dataIndex: "paymentAmount",
+      title: "Payment Amount",
+      width: 100,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
       key: "paid",
       dataIndex: "paid",
       title: "Is Paid",
