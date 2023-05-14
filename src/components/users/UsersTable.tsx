@@ -6,9 +6,13 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
+import { ShowUserPlayerInfoModalModal } from "./ShowUserPlayerInfoModal";
 
 export const UsersTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
+  const [userId, setUserId] = useState("");
+  const [showPlayerModal, setShowPlayerModal] = useState(false);
+
   const [
     getUsers,
     {
@@ -140,8 +144,16 @@ export const UsersTable = () => {
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
         <>
-          <Link href={`/users/${id}`}>View</Link> |{" "}
-          <Link href={`/users/${id}/edit`}>View</Link> | <button>Delete</button>
+          <Link href={`/users/${id}`}>View Team</Link> |{" "}
+          <button
+            onClick={() => {
+              setUserId(id);
+              setShowPlayerModal(true);
+            }}
+          >
+            View Player Info
+          </button>
+          {/* <Link href={`/users/${id}/edit`}>View</Link>  */}
         </>
       ),
     },
@@ -194,6 +206,12 @@ export const UsersTable = () => {
 
   return (
     <>
+      <ShowUserPlayerInfoModalModal
+        modal={showPlayerModal}
+        userId={userId}
+        setUserId={setUserId}
+        setModal={setShowPlayerModal}
+      />
       <form action="" onSubmit={handleSubmit(handleSearch)}>
         <div className="flex gap-2 my-2">
           <input
