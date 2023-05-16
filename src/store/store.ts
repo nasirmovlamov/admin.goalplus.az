@@ -18,6 +18,7 @@ import { leaguesApi } from "./leaguesApi";
 import { teamsApi } from "./teamsApi";
 import { playersApi } from "./playersApi";
 import { paymentApi } from "./paymentApi";
+import { ticketsApi } from "./ticketApi";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action) && !action.type.includes("Internal")) {
@@ -43,6 +44,8 @@ export const store = configureStore({
     [teamsApi.reducerPath]: teamsApi.reducer,
     [playersApi.reducerPath]: playersApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
+    [ticketsApi.reducerPath]: ticketsApi.reducer,
+    tickets: ticketsApi.reducer,
     players: playersApi.reducer,
     teams: teamsApi.reducer,
     leagues: leaguesApi.reducer,
@@ -66,6 +69,7 @@ export const store = configureStore({
     teamsApi.middleware,
     playersApi.middleware,
     paymentApi.middleware,
+    ticketsApi.middleware,
     rtkQueryErrorLogger,
   ],
 });

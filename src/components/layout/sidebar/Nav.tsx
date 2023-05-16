@@ -12,6 +12,7 @@ import {
   faDollar,
   faMedal,
   faScaleBalanced,
+  faTicket,
   faTrophy,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -117,6 +118,30 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           </div>
         </NavItem>
 
+        <NavItem
+          hrefLink="/ticket-types"
+          sidebarStatus={sidebarStatus}
+          menuTitle="Ticket types"
+          subMenu={false}
+          subMenuArray={null}
+        >
+          <div className="w-[50px] h-[50px] flex items-center">
+            <FontAwesomeIcon icon={faTicket} className="text-[30px] ml-2" />
+          </div>
+        </NavItem>
+
+        <NavItem
+          hrefLink="/tickets"
+          sidebarStatus={sidebarStatus}
+          menuTitle="Tickets"
+          subMenu={false}
+          subMenuArray={null}
+        >
+          <div className="w-[50px] h-[50px] flex items-center">
+            <FontAwesomeIcon icon={faTicket} className="text-[30px] ml-2" />
+          </div>
+        </NavItem>
+
         {/* <NavItem
           hrefLink="/category"
           sidebarStatus={sidebarStatus}
@@ -127,7 +152,7 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           <CollectionIcon className="h-10" />
         </NavItem> */}
 
-        <NavItem
+        {/* <NavItem
           hrefLink="/sub-category"
           sidebarStatus={sidebarStatus}
           menuTitle="Sub-Category"
@@ -135,7 +160,7 @@ const Nav = ({ sidebarOutsideClick }: any) => {
           subMenuArray={null}
         >
           <DuplicateIcon className="h-10" />
-        </NavItem>
+        </NavItem> */}
 
         {/* this menu has child Menu     */}
         {/* <NavItem
