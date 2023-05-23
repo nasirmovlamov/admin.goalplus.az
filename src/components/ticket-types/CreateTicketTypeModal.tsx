@@ -97,6 +97,7 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
               <option value="Unlimited">Unlimited</option>
               <option value="Monthly">Monthly</option>
               <option value="Daily">Daily</option>
+              <option value="Free">Free</option>
             </select>
             <span className=" text-red-500">
               {errors.ticketCategory && "TicketCategory is required"}
