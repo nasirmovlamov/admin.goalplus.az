@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ErrorMapper from "../common/ErrorMapper";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,11 @@ import toast from "react-hot-toast";
 import { ticketsApi } from "@/store/ticketApi";
 import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
+
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import { Calendar, DateObject } from "react-multi-date-picker";
+
 type Props = {
   modal: any;
   setModal: any;
@@ -14,9 +19,7 @@ type Props = {
 type CreateTicketTypeDto = {
   name: string;
   description: string;
-  date: string;
-  dateStart: string;
-  dateEnd: string;
+  dates: any[];
   price: number;
   ticketCategory: string;
 };
@@ -27,6 +30,9 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
+    setValue,
+    trigger,
   } = useForm<CreateTicketTypeDto>();
 
   const [
@@ -45,9 +51,7 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
       const postData = {
         name: data.name,
         description: data.description,
-        date: new Date(data.date).toISOString(),
-        dateStart: new Date(data.dateStart).toISOString(),
-        dateEnd: new Date(data.dateEnd).toISOString(),
+        dates: data.dates,
         price: data.price,
       };
       await ticketTypePostApi(postData).unwrap();
@@ -56,6 +60,19 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
       toast.error("Something went wrong");
     }
   };
+
+  register("dates", {
+    required: true,
+  });
+
+  // useEffect(() => {
+  //   if (watch("dates")?.length) {
+  //     console.log(watch("dates"));
+  //     const date = new Date(watch("dates")[0]);
+  //     console.log(date.toISOString());
+  //   }
+  // }, [watch("dates")]);
+
   return (
     <>
       <PureModal
@@ -94,9 +111,6 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
               {...register("ticketCategory", { required: true })}
               className="border-2 w-full border-[#00A3FF] "
             >
-              <option value="Unlimited">Unlimited</option>
-              <option value="Monthly">Monthly</option>
-              <option value="Daily">Daily</option>
               <option value="Free">Free</option>
               <option value="Festival">Festival</option>
               <option value="Workshop">Workshop</option>
@@ -141,44 +155,31 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
           </div>
 
           <div className="flex justify-between flex-col">
-            <label className="font-semibold pr-2">Date</label>
-            <input
-              {...register("date", {
+            <label className="font-semibold pr-2">Dates</label>
+            <Calendar
+              value={watch("dates")}
+              onChange={(dates: DateObject[]) => {
+                // normalize dates
+                dates = dates.map((date: any) =>
+                  new Date(date).toISOString()
+                ) as any;
+                setValue("dates", dates);
+              }}
+              multiple={true}
+              plugins={[
+                <DatePanel key="1" sort="date" />,
+                <TimePicker key="2" />,
+              ]}
+            />
+            {/* <input
+              {...register("dates", {
                 required: true,
               })}
               className="border-2 w-full border-[#00A3FF] "
-              type="date"
-            />
+              type="text"
+            /> */}
             <span className=" text-red-500">
-              {errors.date && "Date is required"}
-            </span>
-          </div>
-
-          <div className="flex justify-between flex-col">
-            <label className="font-semibold pr-2">Date End</label>
-            <input
-              {...register("dateEnd", {
-                required: true,
-              })}
-              className="border-2 w-full border-[#00A3FF] "
-              type="date"
-            />
-            <span className=" text-red-500">
-              {errors.dateEnd && "Date End is required"}
-            </span>
-          </div>
-
-          <div className="flex justify-between flex-col">
-            <label className="font-semibold pr-2">Date Start</label>
-            <input
-              {...register("dateStart", {
-                required: true,
-              })}
-              className="border-2 w-full border-[#00A3FF] "
-              type="date"
-            />
-            <span className=" text-red-500">
-              {errors.dateStart && "Date Start is required"}
+              {errors.dates && "Dates is required"}
             </span>
           </div>
 

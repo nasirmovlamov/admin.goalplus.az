@@ -145,17 +145,21 @@ const TicketTypesTable = (props: Props) => {
 
   return (
     <>
-      <EditTicketTypeModal
-        setTicketTypeId={setTicketTypeId}
-        ticketTypeId={ticketTypeId}
-        modal={editTicketTypeModal}
-        setModal={setEditTicketTypeModal}
-      />
-      <DeleteTicketTypeSureModal
-        ticketTypeId={ticketTypeId}
-        modal={deleteTicketTypeSureModal}
-        setModal={setDeleteTicketTypeSureModal}
-      />
+      {ticketTypeId && (
+        <EditTicketTypeModal
+          setTicketTypeId={setTicketTypeId}
+          ticketTypeId={ticketTypeId}
+          modal={editTicketTypeModal}
+          setModal={setEditTicketTypeModal}
+        />
+      )}
+      {ticketTypeId && (
+        <DeleteTicketTypeSureModal
+          ticketTypeId={ticketTypeId}
+          modal={deleteTicketTypeSureModal}
+          setModal={setDeleteTicketTypeSureModal}
+        />
+      )}
 
       <form action="" onSubmit={handleSubmit(handleSearch)}>
         <div className="flex gap-2 my-2">
