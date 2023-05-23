@@ -98,6 +98,14 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
               <option value="Monthly">Monthly</option>
               <option value="Daily">Daily</option>
               <option value="Free">Free</option>
+              <option value="Festival">Festival</option>
+              <option value="Workshop">Workshop</option>
+              <option value="Masterclass">Masterclass</option>
+              <option value="Party">Party</option>
+              <option value="Tournament">Tournament</option>
+              <option value="Wellness">Wellness</option>
+              <option value="Show">Show</option>
+              <option value="Other">Other</option>
             </select>
             <span className=" text-red-500">
               {errors.ticketCategory && "TicketCategory is required"}
