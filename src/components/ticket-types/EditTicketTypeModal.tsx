@@ -88,7 +88,6 @@ const EditTicketTypeModal = ({
 
   useLayoutEffect(() => {
     if (isSuccessGetTicketType) {
-      console.log("HELLO");
       const dates = getDataTicketType?.dates.map((date: any) => {
         return new Date(date);
       });

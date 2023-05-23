@@ -7,6 +7,7 @@ import React, { use, useEffect, useState } from "react";
 import { render } from "react-dom";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
+import { DeleteTeamSureModal } from "./DeleteTeamSureModal copy";
 
 export const TeamsTable = () => {
   const router = useRouter();
@@ -29,6 +30,8 @@ export const TeamsTable = () => {
       status: teamsHeadersStatus,
     },
   ] = teamsApi.useLazyGetTeamsHeadersQuery();
+  const [deleteTeamModal, setDeleteTeamModal] = useState(false);
+  const [teamId, setTeamId] = useState(false);
   const [
     deleteTeamApi,
     {
@@ -213,7 +216,9 @@ export const TeamsTable = () => {
           </Link>
           <button
             onClick={() => {
-              deleteTeam(id);
+              // deleteTeam(id);
+              setDeleteTeamModal(true);
+              setTeamId(id);
             }}
             className=" bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded"
           >
@@ -241,7 +246,6 @@ export const TeamsTable = () => {
   useEffect(() => {
     if (isTeamsHeadersSuccess) {
       const params = router.query;
-      console.log(params);
       getTeams({
         PageNumber: 1,
         PageSize: 50,
@@ -282,6 +286,11 @@ export const TeamsTable = () => {
 
   return (
     <>
+      <DeleteTeamSureModal
+        modal={deleteTeamModal}
+        setModal={setDeleteTeamModal}
+        teamId={teamId}
+      />
       {isTeamsLoading ? (
         <div>Teams table is loading...</div>
       ) : teamsError ? (
