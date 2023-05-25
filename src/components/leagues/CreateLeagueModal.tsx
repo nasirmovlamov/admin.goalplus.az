@@ -20,6 +20,7 @@ export type CreateLeagueType = {
     priceEarly: string;
     priceRegular: string;
     maxNumberOfPlayers: string;
+    maxNumberOfTeams: string;
     maxNumberOfSubstitutions: string;
     minNumberOfPlayers: string;
     minNumberOfSubstitutions: string;
@@ -233,6 +234,20 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             <span className=" text-red-500">
               {errors?.leagueDetails?.maxNumberOfPlayers &&
                 "maxNumberOfPlayers is required"}
+            </span>
+          </div>
+          <div className="flex justify-between flex-col">
+            <label className="font-semibold pr-2">maxNumberOfTeams</label>
+            <input
+              {...register("leagueDetails.maxNumberOfTeams", {
+                required: false,
+              })}
+              className="border-2 border-[#C4F000] w-full "
+              type="text"
+            />
+            <span className=" text-red-500">
+              {errors?.leagueDetails?.maxNumberOfTeams &&
+                "maxNumberOfTeams is required"}
             </span>
           </div>
           <div className="flex justify-between flex-col">
