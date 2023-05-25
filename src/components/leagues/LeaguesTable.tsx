@@ -160,6 +160,15 @@ export const LeaguesTable = () => {
     {
       key: "leagueDetails",
       dataIndex: "leagueDetails",
+      title: "Max number of teams",
+      width: 100,
+      render: (leagueDetails: any) => <>{leagueDetails.maxNumberOfTeams}</>,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      key: "leagueDetails",
+      dataIndex: "leagueDetails",
       title: "Min number of players",
       width: 100,
       render: (leagueDetails: any) => <>{leagueDetails.minNumberOfPlayers}</>,

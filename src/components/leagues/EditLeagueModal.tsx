@@ -23,6 +23,7 @@ export type EditLeagueType = {
     maxNumberOfPlayers: string;
     maxNumberOfSubstitutions: string;
     minNumberOfPlayers: string;
+    minNumberOfTeams: string;
     minNumberOfSubstitutions: string;
     minAge: string;
     maxAge: string;
@@ -246,6 +247,20 @@ export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
             <label className="font-semibold pr-2">maxNumberOfPlayers</label>
             <input
               {...register("leagueDetails.maxNumberOfPlayers", {
+                required: false,
+              })}
+              className="border-2 border-[#C4F000] w-full "
+              type="text"
+            />
+            <span className=" text-red-500">
+              {errors?.leagueDetails?.maxNumberOfPlayers &&
+                "maxNumberOfPlayers is required"}
+            </span>
+          </div>
+          <div className="flex justify-between flex-col">
+            <label className="font-semibold pr-2">maxNumberOfTeams</label>
+            <input
+              {...register("leagueDetails.maxNumberOfTeams", {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
