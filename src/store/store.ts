@@ -21,6 +21,13 @@ import { paymentApi } from "./paymentApi";
 import { ticketsApi } from "./ticketApi";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
+  console.log("action?.payload?.status", action?.payload?.status);
+  if (action?.payload?.status == 401) {
+    toast.error("Sistemə daxil olun");
+    localStorage.clear();
+    window.location.href = "/login";
+  }
+
   if (isRejectedWithValue(action) && !action.type.includes("Internal")) {
     // if (
     //   action.payload?.data?.message !== "Resource not found." &&
