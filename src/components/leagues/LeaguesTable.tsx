@@ -10,6 +10,9 @@ import { DeleteSportSureModal } from "../sports/DeleteSportSureModal";
 import { EditSportModal } from "../sports/EditSportModal";
 import { EditLeagueModal } from "./EditLeagueModal";
 import { DeleteLeagueSureModal } from "./DeleteLeagueSureModal copy";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import toast from "react-hot-toast";
 
 export const LeaguesTable = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -26,6 +29,15 @@ export const LeaguesTable = () => {
       isSuccess: isLeaguesSuccess,
     },
   ] = leaguesApi.useLazyGetLeaguesQuery();
+  const [
+    getLeaguesExport,
+    {
+      data: leaguesDataExport,
+      isLoading: isLeaguesLoadingExport,
+      error: leaguesErrorExport,
+      isSuccess: isLeaguesSuccessExport,
+    },
+  ] = leaguesApi.useLazyGetLeaguesExportQuery();
   const [
     getLeaguesHeaders,
     {
@@ -239,6 +251,44 @@ export const LeaguesTable = () => {
     },
   ];
 
+  const exportLeagues = () => {
+    getLeaguesExport()
+      .then((res) => {
+        // console.log(res);
+        // const url = window.URL.createObjectURL(
+        //   new Blob([res], { type: "application/vnd.ms-excel" })
+        // );
+        // const link = document.createElement("a");
+        // link.href = url;
+        // link.setAttribute("download", "leagues.xlsx");
+        // document.body.appendChild(link);
+        // link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something went wrong");
+      });
+  };
+
+  //Pagination
+  const [activePage, setActivePage] = useState(15);
+  const handlePageChange = (pageNumber: any) => {
+    setActivePage(pageNumber);
+  };
+
+  const handlePage = (pageNumber: number) => {
+    setPagination({ ...pagination, CurrentPage: pageNumber });
+    getLeagues({
+      PageNumber: pageNumber,
+      PageSize: pageSize,
+      sportId: router.query.id as any,
+    });
+  };
+
+  useEffect(() => {
+    // log export headers
+  }, [leaguesDataExport]);
+
   useEffect(() => {
     const params = router.query;
     if (router.isReady) {
@@ -271,21 +321,6 @@ export const LeaguesTable = () => {
       setPagination(leaguesData.pagination);
     }
   }, [isLeaguesSuccess]);
-
-  //Pagination
-  const [activePage, setActivePage] = useState(15);
-  const handlePageChange = (pageNumber: any) => {
-    setActivePage(pageNumber);
-  };
-
-  const handlePage = (pageNumber: number) => {
-    setPagination({ ...pagination, CurrentPage: pageNumber });
-    getLeagues({
-      PageNumber: pageNumber,
-      PageSize: pageSize,
-      sportId: router.query.id as any,
-    });
-  };
 
   return (
     <>
@@ -341,6 +376,15 @@ export const LeaguesTable = () => {
           activeItemClassName="bg-[#C4F000] text-black-ripon"
           navClassName="bg-black-ripon text-[#C4F000]"
         />
+      </div>
+      <div className="w-full flex justify-end my-5">
+        <button
+          className="bg-green-500 p-2 rounded-md cursor-pointer text-white"
+          onClick={exportLeagues}
+        >
+          Export all league
+          <FontAwesomeIcon icon={faFileExport} className="ml-2" />
+        </button>
       </div>
     </>
   );

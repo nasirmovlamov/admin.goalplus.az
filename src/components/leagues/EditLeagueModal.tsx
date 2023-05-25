@@ -21,9 +21,9 @@ export type EditLeagueType = {
     priceEarly: string;
     priceRegular: string;
     maxNumberOfPlayers: string;
+    maxNumberOfTeams: string;
     maxNumberOfSubstitutions: string;
     minNumberOfPlayers: string;
-    minNumberOfTeams: string;
     minNumberOfSubstitutions: string;
     minAge: string;
     maxAge: string;

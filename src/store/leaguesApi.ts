@@ -134,5 +134,19 @@ export const leaguesApi = createApi({
         };
       },
     }),
+
+    getLeaguesExport: builder.query<any, void>({
+      query: () => ({
+        url: `/leagues/export`,
+        method: "GET",
+      }),
+      transformResponse(apiResponse, meta: any) {
+        console.log("meta", meta);
+        console.log("apiResponse", apiResponse);
+        return {
+          "Report-To": JSON.parse(meta.response.headers.get("Report-To")),
+        };
+      },
+    }),
   }),
 });
