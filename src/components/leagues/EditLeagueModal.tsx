@@ -353,6 +353,7 @@ export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
+              <option value="Unisex">Unisex</option>
             </select>
             <span className=" text-red-500">
               {errors?.leagueDetails?.gender && "gender is required"}
