@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { ShowUserPlayerInfoModalModal } from "./ShowUserPlayerInfoModal";
+import axios from "axios";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const UsersTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
@@ -204,6 +207,30 @@ export const UsersTable = () => {
     });
   };
 
+  const exportUsers = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.goalplus.az/api/users/export",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      // create csv file from data
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      // download file
+      document.body.appendChild(link);
+      link.href = url;
+      link.download = "users.csv";
+      link.click();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <ShowUserPlayerInfoModalModal
@@ -281,6 +308,16 @@ export const UsersTable = () => {
           activeItemClassName="bg-[#C4F000] text-black-ripon"
           navClassName="bg-black-ripon text-[#C4F000]"
         />
+      </div>
+
+      <div className="w-full flex justify-end my-5">
+        <button
+          className="bg-green-500 p-2 rounded-md cursor-pointer text-white"
+          onClick={exportUsers}
+        >
+          Export all users
+          <FontAwesomeIcon icon={faFileExport} className="ml-2" />
+        </button>
       </div>
     </>
   );

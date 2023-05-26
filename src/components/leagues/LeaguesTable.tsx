@@ -13,6 +13,7 @@ import { DeleteLeagueSureModal } from "./DeleteLeagueSureModal copy";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export const LeaguesTable = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -251,23 +252,40 @@ export const LeaguesTable = () => {
     },
   ];
 
-  const exportLeagues = () => {
-    getLeaguesExport()
-      .then((res) => {
-        // console.log(res);
-        // const url = window.URL.createObjectURL(
-        //   new Blob([res], { type: "application/vnd.ms-excel" })
-        // );
-        // const link = document.createElement("a");
-        // link.href = url;
-        // link.setAttribute("download", "leagues.xlsx");
-        // document.body.appendChild(link);
-        // link.click();
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Something went wrong");
-      });
+  const exportLeagues = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.goalplus.az/api/leagues/export"
+      );
+      console.log(response);
+      // create csv file from data
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      // download file
+      document.body.appendChild(link);
+      link.href = url;
+      link.download = "leagues.csv";
+      link.click();
+    } catch (error) {
+      console.log(error);
+    }
+    // getLeaguesExport()
+    //   .then((res) => {
+    //     // console.log(res);
+    //     // const url = window.URL.createObjectURL(
+    //     //   new Blob([res], { type: "application/vnd.ms-excel" })
+    //     // );
+    //     // const link = document.createElement("a");
+    //     // link.href = url;
+    //     // link.setAttribute("download", "leagues.xlsx");
+    //     // document.body.appendChild(link);
+    //     // link.click();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     toast.error("Something went wrong");
+    //   });
   };
 
   //Pagination

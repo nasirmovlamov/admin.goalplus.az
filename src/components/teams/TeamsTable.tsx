@@ -8,6 +8,9 @@ import { render } from "react-dom";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { DeleteTeamSureModal } from "./DeleteTeamSureModal copy";
+import axios from "axios";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const TeamsTable = () => {
   const router = useRouter();
@@ -284,6 +287,46 @@ export const TeamsTable = () => {
     } catch (error) {}
   };
 
+  const exportTeams = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.goalplus.az/api/teams/export",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      // create csv file from data
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      // download file
+      document.body.appendChild(link);
+      link.href = url;
+      link.download = "teams.csv";
+      link.click();
+    } catch (error) {
+      console.log(error);
+    }
+    // getLeaguesExport()
+    //   .then((res) => {
+    //     // console.log(res);
+    //     // const url = window.URL.createObjectURL(
+    //     //   new Blob([res], { type: "application/vnd.ms-excel" })
+    //     // );
+    //     // const link = document.createElement("a");
+    //     // link.href = url;
+    //     // link.setAttribute("download", "leagues.xlsx");
+    //     // document.body.appendChild(link);
+    //     // link.click();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     toast.error("Something went wrong");
+    //   });
+  };
+
   return (
     <>
       <DeleteTeamSureModal
@@ -332,6 +375,16 @@ export const TeamsTable = () => {
           activeItemClassName="bg-[#C4F000] text-black-ripon"
           navClassName="bg-black-ripon text-[#C4F000]"
         />
+      </div>
+
+      <div className="w-full flex justify-end my-5">
+        <button
+          className="bg-green-500 p-2 rounded-md cursor-pointer text-white"
+          onClick={exportTeams}
+        >
+          Export all teams
+          <FontAwesomeIcon icon={faFileExport} className="ml-2" />
+        </button>
       </div>
     </>
   );

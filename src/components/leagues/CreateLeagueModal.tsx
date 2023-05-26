@@ -63,7 +63,21 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
     try {
       await leaguesPostApi({
         sportId: router.query.id as string,
-        postData: data,
+        postData: {
+          ...data,
+          leagueDocuments: {
+            identification:
+              data.leagueDocuments.identification === "true" ? true : false,
+            schoolCertificate:
+              data.leagueDocuments.schoolCertificate === "true" ? true : false,
+            schoolContact:
+              data.leagueDocuments.schoolContact === "true" ? true : false,
+            schoolLogo:
+              data.leagueDocuments.schoolLogo === "true" ? true : false,
+            clubContract:
+              data.leagueDocuments.clubContract === "true" ? true : false,
+          },
+        },
       }).unwrap();
       toast.success("League created successfully");
     } catch (error) {
@@ -135,7 +149,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="datetime-local"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.deadline && "deadline is required"}
@@ -148,7 +162,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="datetime-local"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.startDate && "startDate is required"}
@@ -161,7 +175,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="datetime-local"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.endDate && "endDate is required"}
@@ -174,7 +188,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="datetime-local"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.matchStartTime &&
@@ -188,7 +202,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="datetime-local"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.matchEndTime &&

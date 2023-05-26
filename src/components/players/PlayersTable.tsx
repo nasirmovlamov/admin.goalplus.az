@@ -6,6 +6,9 @@ import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { DeletePlayerSureModal } from "./DeletePlayerSureModal";
 import { title } from "process";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 
 export const PlayersTable = () => {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -315,6 +318,30 @@ export const PlayersTable = () => {
     });
   };
 
+  const exportPlayers = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.goalplus.az/api/players/export",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      // create csv file from data
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      // download file
+      document.body.appendChild(link);
+      link.href = url;
+      link.download = "players.csv";
+      link.click();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       {isPlayersLoading ? (
@@ -364,6 +391,16 @@ export const PlayersTable = () => {
           activeItemClassName="bg-[#C4F000] text-black-ripon"
           navClassName="bg-black-ripon text-[#C4F000]"
         />
+      </div>
+
+      <div className="w-full flex justify-end my-5">
+        <button
+          className="bg-green-500 p-2 rounded-md cursor-pointer text-white"
+          onClick={exportPlayers}
+        >
+          Export all players
+          <FontAwesomeIcon icon={faFileExport} className="ml-2" />
+        </button>
       </div>
     </>
   );
