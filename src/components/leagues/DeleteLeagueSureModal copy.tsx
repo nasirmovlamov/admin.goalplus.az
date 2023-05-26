@@ -52,7 +52,7 @@ export const DeleteLeagueSureModal = ({ sportId, modal, setModal }: any) => {
       >
         <div className="flex-row space-y-3 relative">
           <div className="bg-[#00A3FF] p-2 font-bold text-lg text-center text-white -mt-4 -mx-4 mb-5 pb-4">
-            <p>Are you sure to delete sport</p>
+            <p>Are you sure to delete league</p>
           </div>
 
           <div className="flex justify-center gap-4">
