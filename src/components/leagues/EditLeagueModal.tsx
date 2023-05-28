@@ -40,7 +40,12 @@ export type EditLeagueType = {
   };
 };
 
-export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
+export const EditLeagueModal = ({
+  leagueId,
+  setLeagueId,
+  modal,
+  setModal,
+}: any) => {
   const router = useRouter();
   const {
     register,
@@ -118,6 +123,7 @@ export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
         width="800px"
         onClose={() => {
           setModal(false);
+          setLeagueId("");
           reset();
           return true;
         }}

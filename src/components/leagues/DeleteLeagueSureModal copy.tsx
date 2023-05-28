@@ -1,4 +1,4 @@
-import { sportsApi } from "@/store/sportsApi";
+import { leaguesApi } from "@/store/leaguesApi";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -6,31 +6,34 @@ import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 import ErrorMapper from "../common/ErrorMapper";
 
-export const DeleteLeagueSureModal = ({ sportId, modal, setModal }: any) => {
-  //For Image Preview
-  const [selectedImage, setSelectedImage] = useState();
+export const DeleteLeagueSureModal = ({
+  leagueId,
+  setLeagueId,
+  modal,
+  setModal,
+}: any) => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
   const [
-    sportsDeleteApi,
+    leaguesDeleteApi,
     {
-      data: dataSports,
-      isSuccess: isSuccessSports,
-      isLoading: isLoadingSports,
-      isError: isErrorSports,
-      error: errorSports,
+      data: dataLeagues,
+      isSuccess: isSuccessLeagues,
+      isLoading: isLoadingLeagues,
+      isError: isErrorLeagues,
+      error: errorLeagues,
     },
-  ] = sportsApi.useDeleteSportMutation();
+  ] = leaguesApi.useDeleteLeagueMutation();
 
-  const deleteSport = async (data: any) => {
+  const deleteLeague = async (data: any) => {
     console.log(data);
     try {
-      console.log(sportId);
-      await sportsDeleteApi({
-        sportId: sportId,
+      console.log(leagueId);
+      await leaguesDeleteApi({
+        leagueId: leagueId,
       });
       toast.success("League Deleted Successfully");
       setModal(false);
@@ -47,6 +50,7 @@ export const DeleteLeagueSureModal = ({ sportId, modal, setModal }: any) => {
         width="800px"
         onClose={() => {
           setModal(false);
+          setLeagueId("");
           return true;
         }}
       >
@@ -65,14 +69,14 @@ export const DeleteLeagueSureModal = ({ sportId, modal, setModal }: any) => {
               No
             </button>
             <button
-              onClick={deleteSport}
+              onClick={deleteLeague}
               className="bg-gray-700 text-white p-3 w-full mt-5 text-lg"
             >
               Yeah
             </button>
           </div>
 
-          <ErrorMapper error={errorSports} />
+          <ErrorMapper error={errorLeagues} />
         </div>
       </PureModal>
     </>

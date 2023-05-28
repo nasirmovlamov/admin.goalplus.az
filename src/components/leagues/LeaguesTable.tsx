@@ -247,6 +247,15 @@ export const LeaguesTable = () => {
           >
             Edit
           </button>
+          <button
+            onClick={() => {
+              setLeagueId(id);
+              setDeleteModalOpen(true);
+            }}
+            className="bg-red-500 p-2 rounded-md cursor-pointer"
+          >
+            Delete
+          </button>
         </div>
       ),
     },
@@ -344,11 +353,13 @@ export const LeaguesTable = () => {
     <>
       <EditLeagueModal
         leagueId={leagueId}
+        setLeagueId={setLeagueId}
         modal={isEditModalOpen}
         setModal={setEditModalOpen}
       />
       <DeleteLeagueSureModal
         leagueId={leagueId}
+        setLeagueId={setLeagueId}
         modal={isDeleteModalOpen}
         setModal={setDeleteModalOpen}
       />
