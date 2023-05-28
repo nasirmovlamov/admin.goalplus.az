@@ -48,6 +48,7 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
 
   const onSubmit = async (data: any) => {
     try {
+      console.log("data", data);
       const postData = {
         name: data.name,
         description: data.description,
@@ -163,6 +164,7 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
                 dates = dates.map((date: any) =>
                   new Date(date).toISOString()
                 ) as any;
+                console.log("dates", dates);
                 setValue("dates", dates);
               }}
               multiple={true}

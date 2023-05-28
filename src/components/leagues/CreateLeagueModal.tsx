@@ -45,6 +45,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
     register,
     formState: { errors },
     handleSubmit,
+    setValue,
   } = useForm<CreateLeagueType>();
 
   const [
@@ -65,6 +66,29 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
         sportId: router.query.id as string,
         postData: {
           ...data,
+          leagueDetails: {
+            ...data.leagueDetails,
+            deadline: new Date(data.leagueDetails.deadline).toISOString(),
+            startDate: new Date(data.leagueDetails.startDate).toISOString(),
+            endDate: new Date(data.leagueDetails.endDate).toISOString(),
+            priceEarly: Number(data.leagueDetails.priceEarly),
+            priceRegular: Number(data.leagueDetails.priceRegular),
+            maxNumberOfPlayers: Number(data.leagueDetails.maxNumberOfPlayers),
+            maxNumberOfTeams: Number(data.leagueDetails.maxNumberOfTeams),
+            maxNumberOfSubstitutions: Number(
+              data.leagueDetails.maxNumberOfSubstitutions
+            ),
+            // add seconds to time
+            matchStartTime: `${data.leagueDetails.matchStartTime}:00`,
+            matchEndTime: `${data.leagueDetails.matchEndTime}:00`,
+            minNumberOfPlayers: Number(data.leagueDetails.minNumberOfPlayers),
+            minNumberOfSubstitutions: Number(
+              data.leagueDetails.minNumberOfSubstitutions
+            ),
+            minAge: Number(data.leagueDetails.minAge),
+            maxAge: Number(data.leagueDetails.maxAge),
+            award: Number(data.leagueDetails.award),
+          },
           leagueDocuments: {
             identification:
               data.leagueDocuments.identification === "true" ? true : false,
@@ -147,6 +171,12 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             <input
               {...register("leagueDetails.deadline", {
                 required: false,
+                // onChange: (e) => {
+                //   const date = new Date(e.target.value);
+                //   const dateISO = date.toISOString();
+                //   console.log(dateISO);
+                //   setValue("leagueDetails.deadline", dateISO);
+                // },
               })}
               className="border-2 border-[#C4F000] w-full "
               type="datetime-local"
@@ -160,6 +190,12 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             <input
               {...register("leagueDetails.startDate", {
                 required: false,
+                // onChange: (e) => {
+                //   const date = new Date(e.target.value);
+                //   const dateISO = date.toISOString();
+                //   console.log(dateISO);
+                //   setValue("leagueDetails.startDate", dateISO);
+                // },
               })}
               className="border-2 border-[#C4F000] w-full "
               type="datetime-local"
@@ -173,6 +209,12 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             <input
               {...register("leagueDetails.endDate", {
                 required: false,
+                // onChange: (e) => {
+                //   const date = new Date(e.target.value);
+                //   const dateISO = date.toISOString();
+                //   console.log(dateISO);
+                //   setValue("leagueDetails.endDate", dateISO);
+                // },
               })}
               className="border-2 border-[#C4F000] w-full "
               type="datetime-local"
@@ -186,9 +228,15 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             <input
               {...register("leagueDetails.matchStartTime", {
                 required: false,
+                // onChange: (e) => {
+                //   const date = new Date(e.target.value);
+                //   const dateISO = date.toISOString();
+                //   console.log(dateISO);
+                //   setValue("leagueDetails.matchStartTime", dateISO);
+                // },
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="datetime-local"
+              type="time"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.matchStartTime &&
@@ -200,9 +248,15 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             <input
               {...register("leagueDetails.matchEndTime", {
                 required: false,
+                // onChange: (e) => {
+                //   const date = new Date(e.target.value);
+                //   const dateISO = date.toISOString();
+                //   console.log(dateISO);
+                //   setValue("leagueDetails.matchEndTime", dateISO);
+                // },
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="datetime-local"
+              type="time"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.matchEndTime &&
