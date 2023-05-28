@@ -74,7 +74,26 @@ export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
     try {
       await leaguesPutApi({
         leagueId: leagueId,
-        putData: data,
+        putData: {
+          ...data,
+          leagueDetails: {
+            ...data.leagueDetails,
+            matchStartTime: `${data.leagueDetails.matchStartTime}`,
+            matchEndTime: `${data.leagueDetails.matchEndTime}`,
+          },
+          leagueDocuments: {
+            identification:
+              data.leagueDocuments.identification == "true" ? true : false,
+            schoolCertificate:
+              data.leagueDocuments.schoolCertificate == "true" ? true : false,
+            schoolContact:
+              data.leagueDocuments.schoolContact == "true" ? true : false,
+            schoolLogo:
+              data.leagueDocuments.schoolLogo == "true" ? true : false,
+            clubContract:
+              data.leagueDocuments.clubContract == "true" ? true : false,
+          },
+        },
       }).unwrap();
       toast.success("League updated successfully");
       setModal(false);
@@ -195,7 +214,7 @@ export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="time"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.matchStartTime &&
@@ -209,7 +228,7 @@ export const EditLeagueModal = ({ leagueId, modal, setModal }: any) => {
                 required: false,
               })}
               className="border-2 border-[#C4F000] w-full "
-              type="date"
+              type="time"
             />
             <span className=" text-red-500">
               {errors?.leagueDetails?.matchEndTime &&
