@@ -76,6 +76,7 @@ export const EditLeagueModal = ({
   ] = leaguesApi.usePutLeagueMutation();
 
   const onSubmit = async (data: any) => {
+    console.log("data", data);
     try {
       await leaguesPutApi({
         leagueId: leagueId,
@@ -88,15 +89,15 @@ export const EditLeagueModal = ({
           },
           leagueDocuments: {
             identification:
-              data.leagueDocuments.identification == "true" ? true : false,
+              data.leagueDocuments.identification === "true" ? true : false,
             schoolCertificate:
-              data.leagueDocuments.schoolCertificate == "true" ? true : false,
+              data.leagueDocuments.schoolCertificate === "true" ? true : false,
             schoolContact:
-              data.leagueDocuments.schoolContact == "true" ? true : false,
+              data.leagueDocuments.schoolContact === "true" ? true : false,
             schoolLogo:
-              data.leagueDocuments.schoolLogo == "true" ? true : false,
+              data.leagueDocuments.schoolLogo === "true" ? true : false,
             clubContract:
-              data.leagueDocuments.clubContract == "true" ? true : false,
+              data.leagueDocuments.clubContract === "true" ? true : false,
           },
         },
       }).unwrap();

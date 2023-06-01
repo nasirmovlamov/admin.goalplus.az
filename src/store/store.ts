@@ -21,7 +21,6 @@ import { paymentApi } from "./paymentApi";
 import { ticketsApi } from "./ticketApi";
 
 export const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
-  console.log("action?.payload?.status", action?.payload?.status);
   if (action?.payload?.status == 401) {
     toast.error("Sistemə daxil olun");
     localStorage.clear();
