@@ -275,7 +275,7 @@ const EditTicketTypeModal = ({
                         </option>
                       ))}
                     </select>
-                    <p>Click to activate weekdayes</p>
+                    <p>Click to activate weekdays</p>
                     <WeekComponent
                       dateWeekDays={dateWeekDays}
                       selectDateRangeItem={selectDateRangeItem}
