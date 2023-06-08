@@ -93,7 +93,6 @@ export const TicketsTable = () => {
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
         <>
-          <Link href={`/tickets/${id}`}>View Team</Link> |{" "}
           <button
             onClick={() => {
               setTicketId(id);
@@ -192,7 +191,7 @@ export const TicketsTable = () => {
       ) : (
         <Table
           columns={columns}
-          data={ticketsData?.data}
+          data={ticketsData}
           rowKey="id"
           className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
         />

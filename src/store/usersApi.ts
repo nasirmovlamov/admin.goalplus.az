@@ -40,6 +40,18 @@ export const usersApi = createApi({
       },
     }),
 
+    getUser: builder.query<
+      any,
+      {
+        id: number;
+      }
+    >({
+      query: (body) => ({
+        url: `/users/${body.id}`,
+        method: "GET",
+      }),
+    }),
+
     getHeaders: builder.query<any, void>({
       query: () => ({
         url: `/users`,

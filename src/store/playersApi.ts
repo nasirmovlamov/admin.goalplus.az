@@ -40,6 +40,13 @@ export const playersApi = createApi({
       },
     }),
 
+    getPlayer: builder.query<any, { playerId: number }>({
+      query: (body) => ({
+        url: `/players/${body.playerId}`,
+        method: "GET",
+      }),
+    }),
+
     confirmPlayerApi: builder.mutation<
       any,
       {

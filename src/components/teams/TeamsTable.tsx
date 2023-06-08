@@ -207,7 +207,7 @@ export const TeamsTable = () => {
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
         <div className="flex gap-2 w-full justify-center">
-          <Link href={`/teams/players/${id}`}>
+          <Link href={`/teams/${id}/players`}>
             <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold px-4 py-1 rounded">
               View Players
             </button>

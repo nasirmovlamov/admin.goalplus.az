@@ -36,6 +36,18 @@ export const ticketsApi = createApi({
       providesTags: (result, error, id) => [{ type: "ticket", id: "LIST" }],
     }),
 
+    getTicket: builder.query<
+      any,
+      {
+        id: any;
+      }
+    >({
+      query: (body) => ({
+        url: `/tickets/${body.id}`,
+        method: "GET",
+      }),
+    }),
+
     getHeaders: builder.query<any, void>({
       query: () => ({
         url: `/tickets`,
@@ -64,18 +76,6 @@ export const ticketsApi = createApi({
       providesTags: (result, error, id) => [
         { type: "ticket-types", id: "LIST" },
       ],
-    }),
-
-    getTicket: builder.query<
-      any,
-      {
-        id: any;
-      }
-    >({
-      query: (id) => ({
-        url: `/tickets/${id}`,
-        method: "GET",
-      }),
     }),
 
     getTicketType: builder.query<any, any>({

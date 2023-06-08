@@ -11,15 +11,15 @@ const TicketTypes = (props: Props) => {
     <main className="p-6 sm:p-10 space-y-6">
       <div className="items-start flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
         <PageComponentTitle
-          title="Ticket Types"
-          titleDescription="List, view and edit"
+          title="Ticket requests"
+          titleDescription="List, view"
         />
-        <button
+        {/* <button
           className="bg-[#C4F000] text-black font-bold py-2 px-4 rounded"
           onClick={() => setModal(true)}
         >
           Create Ticket Type
-        </button>
+        </button> */}
       </div>
 
       <section className="grid md:grid-cols-1 xl:grid-cols-1 gap-6">
