@@ -114,7 +114,6 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
               {...register("ticketCategory", { required: true })}
               className="border-2 w-full border-[#00A3FF] "
             >
-              <option value="Free">Free</option>
               <option value="Festival">Festival</option>
               <option value="Workshop">Workshop</option>
               <option value="Masterclass">Masterclass</option>
