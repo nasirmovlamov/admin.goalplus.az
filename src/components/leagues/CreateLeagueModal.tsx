@@ -87,7 +87,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
             ),
             minAge: Number(data.leagueDetails.minAge),
             maxAge: Number(data.leagueDetails.maxAge),
-            award: Number(data.leagueDetails.award),
+            award: data.leagueDetails.award,
           },
           leagueDocuments: {
             identification:
