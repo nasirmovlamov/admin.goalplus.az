@@ -162,9 +162,11 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
                 onChange={(dates: any) => {
                   // change dates from i to new Date
                   dates = dates.map((dateArray: any) => {
-                    dateArray = dateArray.map((date: DateObject) => {
-                      return date.toUTC();
-                    });
+                    dateArray = dateArray.map(
+                      (date: DateObject, index: any) => {
+                        return date.toUTC();
+                      }
+                    );
                     return dateArray;
                   });
                   //add ids to dates arrays

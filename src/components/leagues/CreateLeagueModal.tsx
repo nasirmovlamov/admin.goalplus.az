@@ -60,7 +60,7 @@ export const CreateLeagueModal = ({ sportId, modal, setModal }: any) => {
   ] = leaguesApi.usePostLeagueMutation();
 
   const onSubmit = async (data: any) => {
-    console.log(router.query);
+    console.log("router.query", data.leagueDetails.startDate);
     try {
       await leaguesPostApi({
         sportId: router.query.id as string,
