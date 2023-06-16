@@ -129,13 +129,12 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
           </div>
           <div className="flex justify-between flex-col">
             <label className="font-semibold pr-2">Description</label>
-            <input
+            <textarea
               {...register("description", {
                 required: true,
               })}
               className="border-2 w-full border-[#00A3FF] "
-              type="text"
-            />
+            ></textarea>
             <span className=" text-red-500">
               {errors.description && "Description is required"}
             </span>
@@ -161,14 +160,14 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
                 value={watch("dates")}
                 onChange={(dates: any) => {
                   // change dates from i to new Date
-                  dates = dates.map((dateArray: any) => {
-                    dateArray = dateArray.map(
-                      (date: DateObject, index: any) => {
-                        return date.toUTC();
-                      }
-                    );
-                    return dateArray;
-                  });
+                  // dates = dates.map((dateArray: any) => {
+                  //   dateArray = dateArray.map(
+                  //     (date: DateObject, index: any) => {
+                  //       return date.toUTC();
+                  //     }
+                  //   );
+                  //   return dateArray;
+                  // });
                   //add ids to dates arrays
                   let datesWithIds = dates.map((dateArray: any) => {
                     return {

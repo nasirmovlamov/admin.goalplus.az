@@ -192,12 +192,11 @@ const EditTicketTypeModal = ({
               </div>
               <div className="flex justify-between flex-col">
                 <label className="font-semibold pr-2">Description</label>
-                <input
+                <textarea
                   {...register("description", {
                     required: true,
                   })}
                   className="border-2 w-full border-[#00A3FF] "
-                  type="text"
                 />
                 <span className=" text-red-500">
                   {errors.description && "Description is required"}
@@ -223,14 +222,12 @@ const EditTicketTypeModal = ({
                     style={{ width: "100%" }}
                     value={watch("dates")}
                     onChange={(dates: any) => {
-                      console.log(dates);
-                      // change dates from i to new Date
-                      dates = dates.map((dateArray: any) => {
-                        dateArray = dateArray.map((date: DateObject) => {
-                          return date.toUTC();
-                        });
-                        return dateArray;
-                      });
+                      // dates = dates.map((dateArray: any) => {
+                      //   dateArray = dateArray.map((date: DateObject) => {
+                      //     return date.toUTC();
+                      //   });
+                      //   return dateArray;
+                      // });
                       //add ids to dates arrays
                       let datesWithIds = dates.map((dateArray: any) => {
                         return {
