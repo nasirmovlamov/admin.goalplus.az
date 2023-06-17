@@ -48,17 +48,28 @@ export default function TicketPage() {
     },
 
     {
-      key: "phoneNumber",
-      dataIndex: "phoneNumber",
+      key: "email",
+      dataIndex: "email",
       title: "Email",
       width: 100,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
     },
     {
-      key: "schoolName",
-      dataIndex: "schoolName",
-      title: "schoolName",
+      key: "phoneNumber",
+      dataIndex: "phoneNumber",
+      title: "phoneNumber",
+      width: 100,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
+      key: "hasWolt",
+      dataIndex: "hasWolt",
+      title: "hasWolt",
+      render: (hasWolt: any) => {
+        return <span>{hasWolt ? "Yes" : "No"}</span>;
+      },
       width: 100,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
@@ -67,7 +78,10 @@ export default function TicketPage() {
       key: "dateOfBirth",
       dataIndex: "dateOfBirth",
       title: "dateOfBirth",
-      width: 100,
+      render: (date: any) => {
+        return <span>{new Date(date).toDateString()}</span>;
+      },
+      width: 150,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
     },
