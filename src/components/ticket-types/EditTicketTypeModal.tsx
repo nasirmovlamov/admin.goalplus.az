@@ -87,6 +87,7 @@ const EditTicketTypeModal = ({
             };
           }),
           price: data.price,
+          ticketCategory: data.ticketCategory,
         },
       }).unwrap();
       toast.success("Ticket type updated successfully");
