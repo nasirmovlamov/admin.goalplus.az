@@ -12,19 +12,19 @@ export const TicketsTable = () => {
   const [ticketId, setTicketId] = useState("");
   const [deleteTicketSureModal, setDeleteTicketSureModal] = useState(false);
   const [
-    getUsers,
+    getTickets,
     {
       data: ticketsData,
-      isLoading: isUsersLoading,
+      isLoading: isTicketsLoading,
       error: ticketsError,
-      isSuccess: isUsersSuccess,
+      isSuccess: isTicketsSuccess,
     },
   ] = ticketsApi.useLazyGetTicketsQuery();
   const {
     data: ticketsHeadersData,
-    isLoading: isUsersHeadersLoading,
+    isLoading: isTicketHeadersLoading,
     error: ticketsHeadersError,
-    isSuccess: isUsersHeadersSuccess,
+    isSuccess: isTicketsHeadersSuccess,
     status: ticketsHeadersStatus,
     refetch: ticketsHeadersRefetch,
   } = ticketsApi.useGetHeadersQuery();
@@ -108,27 +108,19 @@ export const TicketsTable = () => {
     },
   ];
 
-  const data = [
-    { id: "01", name: "Jack" },
-    { id: "02", name: "Rose" },
-  ];
-
   useEffect(() => {
-    console.log(isUsersHeadersSuccess);
-    if (isUsersHeadersSuccess) {
-      getUsers({
+    if (isTicketsHeadersSuccess) {
+      getTickets({
         PageNumber: ticketsHeadersData.pagination.CurrentPage,
         PageSize: pageSize,
       });
+      console.log(
+        "ticketsHeadersData.pagination",
+        ticketsHeadersData.pagination
+      );
       setPagination(ticketsHeadersData.pagination);
     }
-  }, [isUsersHeadersSuccess]);
-
-  useEffect(() => {
-    if (isUsersSuccess) {
-      setPagination(ticketsData.pagination);
-    }
-  }, [isUsersSuccess]);
+  }, [isTicketsHeadersSuccess]);
 
   //Pagination
   const [activePage, setActivePage] = useState(15);
@@ -138,7 +130,7 @@ export const TicketsTable = () => {
 
   const handlePage = (pageNumber: number) => {
     setPagination({ ...pagination, CurrentPage: pageNumber });
-    getUsers({
+    getTickets({
       PageNumber: pageNumber,
       PageSize: pageSize,
       SearchTerm: SearchTerm,
@@ -146,85 +138,88 @@ export const TicketsTable = () => {
   };
 
   const handleSearch = () => {
-    getUsers({
+    getTickets({
       PageNumber: pagination.CurrentPage,
       PageSize: pageSize,
       SearchTerm: SearchTerm,
     });
   };
 
-  return (
-    <>
-      <form action="" onSubmit={handleSubmit(handleSearch)}>
-        <div className="flex gap-2 my-2">
-          <input
-            {...register("SearchTerm")}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            placeholder="enter search text"
-            type="text"
-            className="bg-gray-800 text-white px-2 rounded-md h-[34px] max-w-[500px] w-full"
-          />
-          <button className="bg-gray-800 text-white px-2 rounded-md h-[34px]">
-            Search
-          </button>
+  if (isTicketsHeadersSuccess && isTicketsSuccess)
+    return (
+      <>
+        <form action="" onSubmit={handleSubmit(handleSearch)}>
+          <div className="flex gap-2 my-2">
+            <input
+              {...register("SearchTerm")}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="enter search text"
+              type="text"
+              className="bg-gray-800 text-white px-2 rounded-md h-[34px] max-w-[500px] w-full"
+            />
+            <button className="bg-gray-800 text-white px-2 rounded-md h-[34px]">
+              Search
+            </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              setValue("SearchTerm", "");
-              setSearchTerm("");
-              getUsers({
-                PageNumber: pagination.CurrentPage,
-                PageSize: pageSize,
+            <button
+              type="button"
+              onClick={() => {
+                setValue("SearchTerm", "");
+                setSearchTerm("");
+                getTickets({
+                  PageNumber: pagination.CurrentPage,
+                  PageSize: pageSize,
+                });
+              }}
+              className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
+            >
+              Clear Filter
+            </button>
+          </div>
+        </form>
+        {isTicketsLoading ? (
+          <div>Users table is loading...</div>
+        ) : ticketsError ? (
+          <div>Something went wrong while fetching tickets</div>
+        ) : (
+          <Table
+            columns={columns}
+            data={ticketsData}
+            rowKey="id"
+            className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
+          />
+        )}
+
+        <div className="flex justify-center gap-4 mt-2 items-center">
+          <select
+            name="select page pagination"
+            id=""
+            value={pageSize}
+            onChange={(e: any) => {
+              setPageSize(e.target.value);
+              getTickets({
+                PageNumber: 1,
+                PageSize: e.target.value,
               });
             }}
             className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
           >
-            Clear Filter
-          </button>
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="45">45</option>
+          </select>
+          <ResponsivePagination
+            current={pagination?.CurrentPage}
+            total={pagination?.TotalPages}
+            onPageChange={handlePage}
+            className="flex justify-center items-center gap-2 mt-2 text-[15px]"
+            pageItemClassName="flex items-center justify-center rounded-full w-[45px] h-[45px]  bg-black-ripon text-blue-500 p-2"
+            activeItemClassName="bg-[#C4F000] text-black-ripon"
+            navClassName="bg-black-ripon text-[#C4F000]"
+          />
         </div>
-      </form>
-      {isUsersLoading ? (
-        <div>Users table is loading...</div>
-      ) : ticketsError ? (
-        <div>Something went wrong while fetching tickets</div>
-      ) : (
-        <Table
-          columns={columns}
-          data={ticketsData}
-          rowKey="id"
-          className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
-        />
-      )}
+      </>
+    );
 
-      <div className="flex justify-center gap-4 mt-2 items-center">
-        <select
-          name="select page pagination"
-          id=""
-          value={pageSize}
-          onChange={(e: any) => {
-            setPageSize(e.target.value);
-            getUsers({
-              PageNumber: 1,
-              PageSize: e.target.value,
-            });
-          }}
-          className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
-        >
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="45">45</option>
-        </select>
-        <ResponsivePagination
-          current={ticketsData?.pagination?.CurrentPage}
-          total={ticketsData?.pagination?.TotalPages}
-          onPageChange={handlePage}
-          className="flex justify-center items-center gap-2 mt-2 text-[15px]"
-          pageItemClassName="flex items-center justify-center rounded-full w-[45px] h-[45px]  bg-black-ripon text-blue-500 p-2"
-          activeItemClassName="bg-[#C4F000] text-black-ripon"
-          navClassName="bg-black-ripon text-[#C4F000]"
-        />
-      </div>
-    </>
-  );
+  return null;
 };
