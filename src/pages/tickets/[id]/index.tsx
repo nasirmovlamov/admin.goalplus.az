@@ -12,14 +12,23 @@ import ResponsivePagination from "react-responsive-pagination";
 export default function TicketPage() {
   const router = useRouter();
   const [
-    getUser,
+    getTicket,
     {
       data: ticketsData,
-      isLoading: isUsersLoading,
+      isLoading: isTicketLoading,
       error: ticketsError,
-      isSuccess: isUsersSuccess,
+      isSuccess: isTicketSuccess,
     },
   ] = ticketsApi.useLazyGetTicketQuery();
+  const [
+    getTicketType,
+    {
+      data: ticketsTypeData,
+      isLoading: isTicketTypeLoading,
+      error: ticketsTypeError,
+      isSuccess: isTicketTypeSuccess,
+    },
+  ] = ticketsApi.useLazyGetTicketTypeQuery();
 
   const columns = [
     {
@@ -90,20 +99,89 @@ export default function TicketPage() {
   useEffect(() => {
     if (router.isReady) {
       const { id } = router.query;
-      console.log("id", id);
-      getUser({
+      getTicket({
         id: `${id}`,
       });
     }
   }, [router]);
 
+  useEffect(() => {
+    if (isTicketSuccess) {
+      console.log("ticket", ticketsData.id);
+      getTicketType(ticketsData.ticketTypeId);
+    }
+  }, [isTicketSuccess]);
+
+  useEffect(() => {
+    if (isTicketTypeSuccess) {
+      console.log("ticketType", ticketsTypeData);
+    }
+  }, [isTicketTypeSuccess]);
+
   return (
     <Layout title="Tickets">
       <>
-        {isUsersLoading ? (
-          <div>Users table is loading...</div>
+        <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
+          {" "}
+          Ticket Info
+        </p>
+        {isTicketTypeLoading ? (
+          <div>Ticket date info is loading...</div>
+        ) : ticketsTypeError ? (
+          <div>Something went wrong while fetching ticket info</div>
+        ) : null}
+
+        {isTicketTypeSuccess && isTicketSuccess && (
+          <Table
+            columns={[
+              {
+                key: "name",
+                dataIndex: "name",
+                title: "Ticket Type",
+                width: 150,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+              },
+              {
+                key: "id",
+                dataIndex: "id",
+                title: "Ticket id",
+                width: 150,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+              },
+              {
+                key: "price",
+                dataIndex: "price",
+                title: "price",
+                width: 150,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+              },
+              {
+                key: "dates",
+                dataIndex: "dates",
+                title: "dates",
+                width: 150,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+                render: (dates: any) => {
+                  console.log("dates", dates[0].startTime);
+                  return (
+                    <span>{dates[ticketsData.attendancePeriod].startTime}</span>
+                  );
+                },
+              },
+            ]}
+            data={[ticketsTypeData]}
+            className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
+          />
+        )}
+
+        <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
+          {" "}
+          Visitor Info
+        </p>
+        {isTicketLoading ? (
+          <div>Visitor Info is loading...</div>
         ) : ticketsError ? (
-          <div>Something went wrong while fetching tickets</div>
+          <div>Something went wrong while fetching visitor info</div>
         ) : (
           <Table
             columns={columns}
