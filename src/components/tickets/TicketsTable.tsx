@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { ShowUserPlayerInfoModalModal } from "../users/ShowUserPlayerInfoModal";
+import DeleteTicketSureModal from "./DeleteTicketSureModal";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
@@ -144,6 +145,12 @@ export const TicketsTable = () => {
   if (isTicketsHeadersSuccess && isTicketsSuccess)
     return (
       <>
+        <DeleteTicketSureModal
+          setTicketId={setTicketId}
+          ticketId={ticketId}
+          modal={deleteTicketSureModal}
+          setModal={setDeleteTicketSureModal}
+        />
         <form action="" onSubmit={handleSubmit(handleSearch)}>
           <div className="flex gap-2 my-2">
             <input

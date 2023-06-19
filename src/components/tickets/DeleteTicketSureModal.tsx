@@ -6,33 +6,35 @@ import PureModal from "react-pure-modal";
 import "react-pure-modal/dist/react-pure-modal.min.css";
 
 type Props = {
-  ticketTypeId: string;
+  ticketId: string;
+  setTicketId: any;
   modal: any;
   setModal: any;
 };
 
 const DeleteTicketTypeSureModal = ({
-  ticketTypeId,
+  setTicketId,
+  ticketId,
   modal,
   setModal,
 }: Props) => {
   const [
-    ticketTypeDeleteApi,
+    ticketDeleteApi,
     {
-      data: dataTicketTypes,
-      isSuccess: isSuccessTicketTypes,
-      isLoading: isLoadingTicketTypes,
-      isError: isErrorTicketTypes,
-      error: errorTicketTypes,
+      data: dataTicket,
+      isSuccess: isSuccessTicket,
+      isLoading: isLoadingTicket,
+      isError: isErrorTicket,
+      error: errorTicket,
     },
-  ] = ticketsApi.useDeleteTicketTypeMutation();
+  ] = ticketsApi.useDeleteTicketMutation();
 
-  const deleteSport = async (data: any) => {
-    console.log(data);
+  const deleteTicket = async (data: any) => {
     try {
-      await ticketTypeDeleteApi(ticketTypeId).unwrap();
-      toast.success("League Deleted Successfully");
+      await ticketDeleteApi(ticketId).unwrap();
+      toast.success("Ticket Deleted Successfully");
       setModal(false);
+      setTicketId(null);
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -64,14 +66,14 @@ const DeleteTicketTypeSureModal = ({
               No
             </button>
             <button
-              onClick={deleteSport}
+              onClick={deleteTicket}
               className="bg-gray-700 text-white p-3 w-full mt-5 text-lg"
             >
               Yeah
             </button>
           </div>
 
-          <ErrorMapper error={errorTicketTypes} />
+          <ErrorMapper error={errorTicket} />
         </div>
       </PureModal>
     </>

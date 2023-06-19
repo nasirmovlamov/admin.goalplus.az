@@ -96,6 +96,7 @@ export const ticketsApi = createApi({
         url: `/tickets/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: [{ type: "ticket", id: "LIST" }],
     }),
 
     deleteTicketType: builder.mutation<any, any>({
