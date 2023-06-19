@@ -333,7 +333,6 @@ export const LeaguesTable = () => {
   useEffect(() => {
     if (isLeaguesHeadersSuccess) {
       const params = router.query;
-      console.log(params);
       getLeagues({
         PageNumber: 1,
         PageSize: 50,
@@ -342,12 +341,6 @@ export const LeaguesTable = () => {
       setPagination(leaguesHeadersData.pagination);
     }
   }, [isLeaguesHeadersSuccess]);
-
-  useEffect(() => {
-    if (isLeaguesSuccess) {
-      setPagination(leaguesData.pagination);
-    }
-  }, [isLeaguesSuccess]);
 
   return (
     <>

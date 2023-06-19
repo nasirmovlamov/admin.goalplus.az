@@ -32,7 +32,7 @@ export const TicketsTable = () => {
   const [pageSize, setPageSize] = useState(25);
   const [pagination, setPagination] = useState({
     CurrentPage: 1,
-    TotalPages: 25,
+    TotalPages: 0,
     TotalCount: 0,
   });
 
@@ -114,10 +114,6 @@ export const TicketsTable = () => {
         PageNumber: ticketsHeadersData.pagination.CurrentPage,
         PageSize: pageSize,
       });
-      console.log(
-        "ticketsHeadersData.pagination",
-        ticketsHeadersData.pagination
-      );
       setPagination(ticketsHeadersData.pagination);
     }
   }, [isTicketsHeadersSuccess]);
@@ -184,7 +180,7 @@ export const TicketsTable = () => {
         ) : (
           <Table
             columns={columns}
-            data={ticketsData}
+            data={ticketsData.data}
             rowKey="id"
             className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
           />
@@ -209,8 +205,9 @@ export const TicketsTable = () => {
             <option value="45">45</option>
           </select>
           <ResponsivePagination
-            current={pagination?.CurrentPage}
-            total={pagination?.TotalPages}
+            maxWidth={500}
+            current={ticketsData.pagination?.CurrentPage}
+            total={ticketsData.pagination?.TotalPages}
             onPageChange={handlePage}
             className="flex justify-center items-center gap-2 mt-2 text-[15px]"
             pageItemClassName="flex items-center justify-center rounded-full w-[45px] h-[45px]  bg-black-ripon text-blue-500 p-2"

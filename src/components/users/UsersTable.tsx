@@ -300,6 +300,7 @@ export const UsersTable = () => {
           <option value="45">45</option>
         </select>
         <ResponsivePagination
+          maxWidth={500}
           current={usersData?.pagination?.CurrentPage}
           total={usersData?.pagination?.TotalPages}
           onPageChange={handlePage}

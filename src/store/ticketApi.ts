@@ -33,6 +33,12 @@ export const ticketsApi = createApi({
         method: "GET",
         params: body,
       }),
+      transformResponse(apiResponse, meta: any) {
+        return {
+          data: apiResponse,
+          pagination: JSON.parse(meta.response.headers.get("x-pagination")),
+        };
+      },
       providesTags: (result, error, id) => [{ type: "ticket", id: "LIST" }],
     }),
 
