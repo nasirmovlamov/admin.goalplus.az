@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { ShowUserPlayerInfoModalModal } from "../users/ShowUserPlayerInfoModal";
 import DeleteTicketSureModal from "./DeleteTicketSureModal";
+import { name } from "postcss";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
@@ -180,6 +181,23 @@ export const TicketsTable = () => {
             </button>
           </div>
         </form>
+
+        {isTicketsHeadersSuccess && (
+          <Table
+            columns={[
+              {
+                key: "TotalCount",
+                dataIndex: "TotalCount",
+                title: "Total ticket count",
+                width: 250,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+              },
+            ]}
+            data={[ticketsHeadersData.pagination]}
+            className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
+          />
+        )}
+
         {isTicketsLoading ? (
           <div>Users table is loading...</div>
         ) : ticketsError ? (
