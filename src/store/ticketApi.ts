@@ -58,8 +58,8 @@ export const ticketsApi = createApi({
     getHeaders: builder.query<
       any,
       {
-        PageNumber: any;
-        PageSize: any;
+        PageNumber?: any;
+        PageSize?: any;
         SearchTerm?: string;
         TicketTypeId?: any;
       }

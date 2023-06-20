@@ -132,7 +132,7 @@ export const TicketsTable = () => {
   }, [isTicketsHeadersSuccess]);
 
   useEffect(() => {
-    getTicketsHeaders();
+    getTicketsHeaders({});
   }, []);
 
   //Pagination
@@ -214,7 +214,7 @@ export const TicketsTable = () => {
                       className="text-black w-[300px]"
                       onChange={(e) => {
                         if (e.target.value === "all") {
-                          getTicketsHeaders();
+                          getTicketsHeaders({});
                           return;
                         }
                         getTicketsHeaders({
