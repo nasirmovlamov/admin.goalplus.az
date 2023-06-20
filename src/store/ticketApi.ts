@@ -26,6 +26,7 @@ export const ticketsApi = createApi({
         PageNumber: any;
         PageSize: any;
         SearchTerm?: string;
+        TicketTypeId?: any;
       }
     >({
       query: (body) => ({
@@ -54,10 +55,19 @@ export const ticketsApi = createApi({
       }),
     }),
 
-    getHeaders: builder.query<any, void>({
-      query: () => ({
+    getHeaders: builder.query<
+      any,
+      {
+        PageNumber: any;
+        PageSize: any;
+        SearchTerm?: string;
+        TicketTypeId?: any;
+      }
+    >({
+      query: (body) => ({
         url: `/tickets`,
         method: "HEAD",
+        params: body,
       }),
       transformResponse(apiResponse, meta: any) {
         return {

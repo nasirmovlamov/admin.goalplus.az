@@ -7,7 +7,6 @@ import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { ShowUserPlayerInfoModalModal } from "../users/ShowUserPlayerInfoModal";
 import DeleteTicketSureModal from "./DeleteTicketSureModal";
-import { name } from "postcss";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
@@ -23,13 +22,25 @@ export const TicketsTable = () => {
     },
   ] = ticketsApi.useLazyGetTicketsQuery();
   const {
-    data: ticketsHeadersData,
-    isLoading: isTicketHeadersLoading,
-    error: ticketsHeadersError,
-    isSuccess: isTicketsHeadersSuccess,
-    status: ticketsHeadersStatus,
-    refetch: ticketsHeadersRefetch,
-  } = ticketsApi.useGetHeadersQuery();
+    data: ticketsTypeData,
+    isLoading: isTicketsTypeLoading,
+    error: ticketsTypeError,
+    isSuccess: isTicketsTypeSuccess,
+  } = ticketsApi.useGetTicketTypesQuery({
+    PageNumber: 1,
+    PageSize: 100,
+  });
+  const [
+    getTicketsHeaders,
+    {
+      data: ticketsHeadersData,
+      isLoading: isTicketHeadersLoading,
+      error: ticketsHeadersError,
+      isSuccess: isTicketsHeadersSuccess,
+      status: ticketsHeadersStatus,
+    },
+  ] = ticketsApi.useLazyGetHeadersQuery();
+
   const { formState, register, handleSubmit, setValue } = useForm();
   const [pageSize, setPageSize] = useState(25);
   const [pagination, setPagination] = useState({
@@ -120,6 +131,10 @@ export const TicketsTable = () => {
     }
   }, [isTicketsHeadersSuccess]);
 
+  useEffect(() => {
+    getTicketsHeaders();
+  }, []);
+
   //Pagination
   const [activePage, setActivePage] = useState(15);
   const handlePageChange = (pageNumber: any) => {
@@ -185,6 +200,38 @@ export const TicketsTable = () => {
         {isTicketsHeadersSuccess && (
           <Table
             columns={[
+              {
+                key: "TicketType",
+                dataIndex: "TicketType",
+                title: "TicketType",
+                width: 250,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+                render: () => (
+                  <div>
+                    <select
+                      name=""
+                      id=""
+                      className="text-black w-[100px]"
+                      onChange={(e) => {
+                        if (e.target.value === "all") {
+                          getTicketsHeaders();
+                          return;
+                        }
+                        getTicketsHeaders({
+                          TicketTypeId: e.target.value,
+                        });
+                      }}
+                    >
+                      <option value="all">All</option>
+                      {ticketsTypeData.map((ticketType: any, index: number) => (
+                        <option key={index} value={ticketType.id}>
+                          {ticketType.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ),
+              },
               {
                 key: "TotalCount",
                 dataIndex: "TotalCount",
