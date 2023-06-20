@@ -25,6 +25,7 @@ type EditTicketTypeDto = {
   dates: any[];
   price: number;
   ticketCategory: string;
+  active: boolean;
 };
 
 const EditTicketTypeModal = ({
@@ -78,6 +79,7 @@ const EditTicketTypeModal = ({
         id: ticketTypeId,
         postData: {
           name: data.name,
+          active: data.active,
           description: data.description,
           dates: dateWeekDays.map((date: any) => {
             return {
@@ -118,6 +120,7 @@ const EditTicketTypeModal = ({
         return [new Date(dateObject.startTime), new Date(dateObject.endTime)];
       });
       reset({
+        active: getDataTicketType?.active,
         name: getDataTicketType?.name,
         description: getDataTicketType?.description,
         price: getDataTicketType?.price,
@@ -170,6 +173,23 @@ const EditTicketTypeModal = ({
                 />
                 <span className=" text-red-500">
                   {errors.name && "Name is required"}
+                </span>
+              </div>
+              <div className="flex flex-col items-start w-max">
+                <div className="flex justify-start gap-2">
+                  <input
+                    {...register("active", {})}
+                    className="border-2 border-[#00A3FF] "
+                    type="checkbox"
+                    id="activeInput"
+                  />
+                  <label htmlFor="activeInput" className="font-semibold w-max">
+                    Is Active
+                  </label>
+                </div>
+
+                <span className=" text-red-500">
+                  {errors.active && "Name is required"}
                 </span>
               </div>
               <div className="flex justify-between flex-col">

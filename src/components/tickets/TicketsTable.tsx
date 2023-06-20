@@ -7,6 +7,7 @@ import Pagination from "react-js-pagination";
 import ResponsivePagination from "react-responsive-pagination";
 import { ShowUserPlayerInfoModalModal } from "../users/ShowUserPlayerInfoModal";
 import DeleteTicketSureModal from "./DeleteTicketSureModal";
+import Toggle from "react-toggle";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");

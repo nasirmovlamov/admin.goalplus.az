@@ -25,6 +25,7 @@ type CreateTicketTypeDto = {
   dates: any[];
   price: number;
   ticketCategory: string;
+  active: boolean;
 };
 
 const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
@@ -56,6 +57,7 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
       const postData = {
         name: data.name,
         description: data.description,
+        active: data.active,
         dates: dateWeekDays.map((date: any) => {
           return {
             startTime: new Date(date?.startDate).toISOString(),
@@ -106,6 +108,23 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
             />
             <span className=" text-red-500">
               {errors.name && "Name is required"}
+            </span>
+          </div>
+          <div className="flex flex-col items-start w-max">
+            <div className="flex justify-start gap-2">
+              <input
+                {...register("active", {})}
+                className="border-2 border-[#00A3FF] "
+                type="checkbox"
+                id="activeInput"
+              />
+              <label htmlFor="activeInput" className="font-semibold w-max">
+                Is Active
+              </label>
+            </div>
+
+            <span className=" text-red-500">
+              {errors.active && "Name is required"}
             </span>
           </div>
           <div className="flex justify-between flex-col">

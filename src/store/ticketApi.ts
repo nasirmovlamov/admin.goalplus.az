@@ -138,7 +138,7 @@ export const ticketsApi = createApi({
         method: "PUT",
         body: body.postData,
       }),
-      invalidatesTags: [{ type: "ticket-types", id: "LIST" }],
+      invalidatesTags: [{ type: "ticket", id: "LIST" }],
     }),
 
     putTicketType: builder.mutation<

@@ -6,7 +6,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import EditTicketTypeModal from "./EditTicketTypeModal";
 import DeleteTicketTypeSureModal from "./DeleteTicketTypeSureModal";
-
+import Toggle from "react-toggle";
+import "react-toggle/style.css";
 type Props = {};
 
 const TicketTypesTable = (props: Props) => {
@@ -95,15 +96,14 @@ const TicketTypesTable = (props: Props) => {
     },
     {
       title: "Operations",
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "",
       width: 100,
       className: "text-white bg-gray-600 p-2 border-b-2",
-      render: (id: any) => (
+      render: (row: any) => (
         <div className="flex gap-4">
           <button
             onClick={() => {
-              setTicketTypeId(id);
+              setTicketTypeId(row.id);
               setEditTicketTypeModal(true);
             }}
             className="bg-green-500 p-2 rounded-md cursor-pointer"
@@ -112,13 +112,16 @@ const TicketTypesTable = (props: Props) => {
           </button>
           <button
             onClick={() => {
-              setTicketTypeId(id);
+              setTicketTypeId(row.id);
               setDeleteTicketTypeSureModal(true);
             }}
             className="bg-red-500 p-2 rounded-md cursor-pointer"
           >
             Delete
           </button>
+          <div>
+            <Toggle defaultChecked={row.active} onChange={(e) => console.log(row)} />
+          </div>
         </div>
       ),
     },
