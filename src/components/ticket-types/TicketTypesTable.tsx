@@ -120,7 +120,11 @@ const TicketTypesTable = (props: Props) => {
             Delete
           </button>
           <div>
-            <Toggle defaultChecked={row.active} onChange={(e) => console.log(row)} />
+            <Toggle
+              disabled={true}
+              defaultChecked={row.active}
+              onChange={(e) => console.log(row)}
+            />
           </div>
         </div>
       ),
