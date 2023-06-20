@@ -204,14 +204,14 @@ export const TicketsTable = () => {
                 key: "TicketType",
                 dataIndex: "TicketType",
                 title: "TicketType",
-                width: 250,
+                width: 350,
                 className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
                 render: () => (
                   <div>
                     <select
                       name=""
                       id=""
-                      className="text-black w-[100px]"
+                      className="text-black w-[300px]"
                       onChange={(e) => {
                         if (e.target.value === "all") {
                           getTicketsHeaders();
