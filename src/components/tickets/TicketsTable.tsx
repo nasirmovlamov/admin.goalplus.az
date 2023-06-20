@@ -107,7 +107,7 @@ export const TicketsTable = () => {
       className: "text-white bg-gray-600 p-2 border-b-2",
       render: (id: any) => (
         <>
-          <button
+          {/* <button
             onClick={() => {
               setTicketId(id);
               setDeleteTicketSureModal(true);
@@ -115,7 +115,7 @@ export const TicketsTable = () => {
             className="bg-red-500 p-2 rounded-md cursor-pointer"
           >
             Delete
-          </button>
+          </button> */}
           {/* <Link href={`/tickets/${id}/edit`}>View</Link>  */}
         </>
       ),
