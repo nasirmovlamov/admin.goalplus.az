@@ -31,7 +31,7 @@ const DeleteTicketTypeSureModal = ({
     console.log(data);
     try {
       await ticketTypeDeleteApi(ticketTypeId).unwrap();
-      toast.success("League Deleted Successfully");
+      toast.success("Ticket Type Deleted Successfully");
       setModal(false);
     } catch (error) {
       toast.error("Something went wrong");

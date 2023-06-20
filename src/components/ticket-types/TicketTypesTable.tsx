@@ -110,7 +110,7 @@ const TicketTypesTable = (props: Props) => {
           >
             Edit
           </button>
-          <button
+          {/* <button
             onClick={() => {
               setTicketTypeId(row.id);
               setDeleteTicketTypeSureModal(true);
@@ -118,11 +118,11 @@ const TicketTypesTable = (props: Props) => {
             className="bg-red-500 p-2 rounded-md cursor-pointer"
           >
             Delete
-          </button>
+          </button> */}
           <div>
             <Toggle
               disabled={true}
-              defaultChecked={row.active}
+              checked={row.active}
               onChange={(e) => console.log(row)}
             />
           </div>
