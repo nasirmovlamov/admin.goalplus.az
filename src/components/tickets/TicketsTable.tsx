@@ -146,7 +146,6 @@ export const TicketsTable = () => {
         PageSize: pageSize,
       });
       setPagination(ticketsHeadersData.pagination);
-      
     }
   }, [isTicketsHeadersSuccess]);
 
@@ -164,7 +163,7 @@ export const TicketsTable = () => {
           PageNumber: 1,
           PageSize: pageSize,
         });
-        setPagination(ticketsHeadersData.pagination);
+        setPagination(ticketsHeadersData?.pagination);
       }
     }
   }, [isTicketsTypeSuccess, ticketTypeId]);
