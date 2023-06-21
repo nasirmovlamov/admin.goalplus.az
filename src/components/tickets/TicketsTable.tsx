@@ -146,6 +146,7 @@ export const TicketsTable = () => {
         PageSize: pageSize,
       });
       setPagination(ticketsHeadersData.pagination);
+      
     }
   }, [isTicketsHeadersSuccess]);
 
