@@ -258,7 +258,7 @@ export const TicketsTable = () => {
                         getTicketsHeaders({
                           TicketTypeId: e.target.value,
                         });
-                        setTicketTypeId(e.target.value);
+                        setTicketTypeId(e.target.value as any);
                       }}
                     >
                       <option value="all">All</option>
