@@ -101,6 +101,14 @@ export const TicketsTable = () => {
       rowClassName: "bg-black-ripon",
     },
     {
+      key: "creationDate",
+      dataIndex: "creationDate",
+      title: "creationDate",
+      width: 100,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
       title: "Operations",
       dataIndex: "id",
       key: "id",
