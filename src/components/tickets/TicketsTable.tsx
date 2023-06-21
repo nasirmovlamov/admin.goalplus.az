@@ -150,6 +150,12 @@ export const TicketsTable = () => {
           TicketTypeId: ticketTypeId,
         });
         setPagination(ticketsHeadersData.pagination);
+      } else {
+        getTickets({
+          PageNumber: 1,
+          PageSize: pageSize,
+        });
+        setPagination(ticketsHeadersData.pagination);
       }
     }
   }, [isTicketsTypeSuccess, ticketTypeId]);
