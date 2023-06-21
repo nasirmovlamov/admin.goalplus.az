@@ -69,6 +69,14 @@ export const TicketsTable = () => {
       rowClassName: "bg-black-ripon",
     },
     {
+      key: "email",
+      dataIndex: "email",
+      title: "Last Name",
+      width: 100,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
       key: "gender",
       dataIndex: "gender",
       title: "Gender",
@@ -80,7 +88,7 @@ export const TicketsTable = () => {
     {
       key: "phoneNumber",
       dataIndex: "phoneNumber",
-      title: "Email",
+      title: "phoneNumber",
       width: 100,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
