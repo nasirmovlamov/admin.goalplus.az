@@ -13,6 +13,7 @@ export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
   const [ticketId, setTicketId] = useState("");
   const [deleteTicketSureModal, setDeleteTicketSureModal] = useState(false);
+  const [ticketTypeId, setTicketTypeId] = useState(null);
   const [
     getTickets,
     {
@@ -141,6 +142,19 @@ export const TicketsTable = () => {
   }, [isTicketsHeadersSuccess]);
 
   useEffect(() => {
+    if (isTicketsTypeSuccess) {
+      if (ticketTypeId) {
+        getTickets({
+          PageNumber: 1,
+          PageSize: pageSize,
+          TicketTypeId: ticketTypeId,
+        });
+        setPagination(ticketsHeadersData.pagination);
+      }
+    }
+  }, [isTicketsTypeSuccess, ticketTypeId]);
+
+  useEffect(() => {
     getTicketsHeaders({});
   }, []);
 
@@ -224,11 +238,13 @@ export const TicketsTable = () => {
                       onChange={(e) => {
                         if (e.target.value === "all") {
                           getTicketsHeaders({});
+                          setTicketTypeId(null);
                           return;
                         }
                         getTicketsHeaders({
                           TicketTypeId: e.target.value,
                         });
+                        setTicketTypeId(e.target.value);
                       }}
                     >
                       <option value="all">All</option>
