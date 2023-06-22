@@ -53,6 +53,14 @@ export const TicketsTable = () => {
 
   const columns = [
     {
+      key: "index",
+      dataIndex: "index",
+      title: "No",
+      width: 100,
+      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+      rowClassName: "bg-black-ripon",
+    },
+    {
       key: "firstName",
       dataIndex: "firstName",
       title: "First Name",
@@ -117,6 +125,7 @@ export const TicketsTable = () => {
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
     },
+
     {
       title: "Operations",
       dataIndex: "id",
@@ -291,7 +300,10 @@ export const TicketsTable = () => {
         ) : (
           <Table
             columns={columns}
-            data={ticketsData.data}
+            data={ticketsData.data.map((ticket: any, index: number) => ({
+              ...ticket,
+              index: index + 1,
+            }))}
             rowKey="id"
             className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
           />
