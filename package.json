@@ -18,6 +18,7 @@
     "@heroicons/react": "v1",
     "@hookform/resolvers": "^3.1.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/faker": "^6.6.9",
     "@types/node": "18.16.0",
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
@@ -25,9 +26,11 @@
     "@types/react-toggle": "^4.0.3",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
+    "chart.js": "^4.3.0",
     "date-fns": "^2.30.0",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.1",
+    "faker": "^6.6.6",
     "framer-motion": "^10.12.4",
     "heroicons": "^2.0.17",
     "next": "13.3.1",
@@ -35,6 +38,7 @@
     "postcss": "8.4.23",
     "rc-table": "^7.31.1",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-date-picker": "^10.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
@@ -51,6 +55,7 @@
     "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "@hookform/devtools": "^4.3.1"
   }
 }

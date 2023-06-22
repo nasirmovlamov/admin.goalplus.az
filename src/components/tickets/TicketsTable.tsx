@@ -9,6 +9,7 @@ import { ShowUserPlayerInfoModalModal } from "../users/ShowUserPlayerInfoModal";
 import DeleteTicketSureModal from "./DeleteTicketSureModal";
 import Toggle from "react-toggle";
 import { format, parseISO } from "date-fns";
+import AttendanceChart from "./TicketsChart";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
@@ -111,7 +112,7 @@ export const TicketsTable = () => {
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
       render: (dateOfBirth: any) => {
-        return <div>{format(parseISO(dateOfBirth), "MMMM d, yyyy ")}</div>;
+        return <div>{new Date(dateOfBirth).toLocaleDateString()}</div>;
       },
     },
     {
@@ -224,6 +225,7 @@ export const TicketsTable = () => {
   if (isTicketsHeadersSuccess && isTicketsSuccess)
     return (
       <>
+        <AttendanceChart data={ticketsData.data} />
         <DeleteTicketSureModal
           setTicketId={setTicketId}
           ticketId={ticketId}
@@ -259,7 +261,6 @@ export const TicketsTable = () => {
             </button>
           </div>
         </form>
-
         {isTicketsHeadersSuccess && (
           <Table
             columns={[
@@ -345,7 +346,6 @@ export const TicketsTable = () => {
             className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
           />
         )}
-
         {isTicketsLoading ? (
           <div>Users table is loading...</div>
         ) : ticketsError ? (
@@ -361,7 +361,6 @@ export const TicketsTable = () => {
             className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
           />
         )}
-
         <div className="flex justify-center gap-4 mt-2 items-center">
           <select
             name="select page pagination"
@@ -372,6 +371,8 @@ export const TicketsTable = () => {
               getTickets({
                 PageNumber: 1,
                 PageSize: e.target.value,
+                TicketTypeId: ticketTypeId as unknown as string,
+                AttendancePeriod: attendancePeriodIndex as unknown as string,
               });
             }}
             className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
