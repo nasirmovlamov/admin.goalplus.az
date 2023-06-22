@@ -8,12 +8,14 @@ import ResponsivePagination from "react-responsive-pagination";
 import { ShowUserPlayerInfoModalModal } from "../users/ShowUserPlayerInfoModal";
 import DeleteTicketSureModal from "./DeleteTicketSureModal";
 import Toggle from "react-toggle";
+import { format, parseISO } from "date-fns";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
   const [ticketId, setTicketId] = useState("");
   const [deleteTicketSureModal, setDeleteTicketSureModal] = useState(false);
   const [ticketTypeId, setTicketTypeId] = useState(null);
+  const [attendancePeriodIndex, setAttendancePeriodIndex] = useState(null);
   const [
     getTickets,
     {
@@ -92,7 +94,6 @@ export const TicketsTable = () => {
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
     },
-
     {
       key: "phoneNumber",
       dataIndex: "phoneNumber",
@@ -101,51 +102,54 @@ export const TicketsTable = () => {
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
     },
-    {
-      key: "schoolName",
-      dataIndex: "schoolName",
-      title: "schoolName",
-      width: 100,
-      className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-      rowClassName: "bg-black-ripon",
-    },
+
     {
       key: "dateOfBirth",
       dataIndex: "dateOfBirth",
       title: "dateOfBirth",
-      width: 100,
+      width: 300,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
+      render: (dateOfBirth: any) => {
+        return <div>{format(parseISO(dateOfBirth), "MMMM d, yyyy ")}</div>;
+      },
     },
     {
       key: "creationDate",
       dataIndex: "creationDate",
       title: "creationDate",
-      width: 100,
+      width: 300,
       className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
       rowClassName: "bg-black-ripon",
+      render: (creationDate: any) => {
+        return (
+          <>
+            <div>{format(parseISO(creationDate), "MMMM d, yyyy HH:mm:ss")}</div>
+          </>
+        );
+      },
     },
 
-    {
-      title: "Operations",
-      dataIndex: "id",
-      key: "id",
-      className: "text-white bg-gray-600 p-2 border-b-2",
-      render: (id: any) => (
-        <>
-          {/* <button
-            onClick={() => {
-              setTicketId(id);
-              setDeleteTicketSureModal(true);
-            }}
-            className="bg-red-500 p-2 rounded-md cursor-pointer"
-          >
-            Delete
-          </button> */}
-          {/* <Link href={`/tickets/${id}/edit`}>View</Link>  */}
-        </>
-      ),
-    },
+    // {
+    //   title: "Operations",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   className: "text-white bg-gray-600 p-2 border-b-2",
+    //   render: (id: any) => (
+    //     <>
+    //       {/* <button
+    //         onClick={() => {
+    //           setTicketId(id);
+    //           setDeleteTicketSureModal(true);
+    //         }}
+    //         className="bg-red-500 p-2 rounded-md cursor-pointer"
+    //       >
+    //         Delete
+    //       </button> */}
+    //       {/* <Link href={`/tickets/${id}/edit`}>View</Link>  */}
+    //     </>
+    //   ),
+    // },
   ];
 
   useEffect(() => {
@@ -161,11 +165,24 @@ export const TicketsTable = () => {
   useEffect(() => {
     if (isTicketsTypeSuccess) {
       if (ticketTypeId) {
-        getTickets({
+        let ticketPayload: {
+          PageNumber: number;
+          PageSize: number;
+          TicketTypeId?: string;
+          AttendancePeriod?: string;
+        } = {
           PageNumber: 1,
           PageSize: pageSize,
-          TicketTypeId: ticketTypeId,
-        });
+        };
+        ticketPayload.PageNumber = 1;
+        ticketPayload.PageSize = pageSize;
+        if (ticketTypeId !== "all") {
+          ticketPayload.TicketTypeId = ticketTypeId;
+          if (attendancePeriodIndex) {
+            ticketPayload.AttendancePeriod = attendancePeriodIndex;
+          }
+        }
+        getTickets(ticketPayload);
         setPagination(ticketsHeadersData.pagination);
       } else {
         getTickets({
@@ -175,7 +192,7 @@ export const TicketsTable = () => {
         setPagination(ticketsHeadersData?.pagination);
       }
     }
-  }, [isTicketsTypeSuccess, ticketTypeId]);
+  }, [isTicketsTypeSuccess, ticketTypeId, attendancePeriodIndex]);
 
   useEffect(() => {
     getTicketsHeaders({});
@@ -262,20 +279,56 @@ export const TicketsTable = () => {
                         if (e.target.value === "all") {
                           getTicketsHeaders({});
                           setTicketTypeId(null);
+                          setAttendancePeriodIndex(null);
                           return;
                         }
                         getTicketsHeaders({
                           TicketTypeId: e.target.value,
                         });
+                        setAttendancePeriodIndex(null);
                         setTicketTypeId(e.target.value as any);
                       }}
                     >
                       <option value="all">All</option>
+
                       {ticketsTypeData.map((ticketType: any, index: number) => (
                         <option key={index} value={ticketType.id}>
                           {ticketType.name}
                         </option>
                       ))}
+                    </select>
+                  </div>
+                ),
+              },
+              {
+                key: "TicketType",
+                dataIndex: "TicketType",
+                title: "TicketType",
+                width: 350,
+                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+                render: () => (
+                  <div>
+                    <select
+                      name=""
+                      id=""
+                      className="text-black w-[300px]"
+                      onChange={(e) => {
+                        getTicketsHeaders({
+                          TicketTypeId: ticketTypeId as unknown as string,
+                          AttendancePeriod: e.target.value,
+                        });
+                        setAttendancePeriodIndex(e.target.value as any);
+                      }}
+                    >
+                      {ticketsTypeData
+                        ?.filter(
+                          (ticketType: any) => ticketType.id == ticketTypeId
+                        )[0]
+                        ?.dates?.map((date: any, index: number) => (
+                          <option key={index} value={index}>
+                            {format(new Date(date.startTime), "MMMM d")}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 ),

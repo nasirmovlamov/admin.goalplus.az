@@ -27,6 +27,7 @@ export const ticketsApi = createApi({
         PageSize: any;
         SearchTerm?: string;
         TicketTypeId?: any;
+        AttendancePeriod?: any;
       }
     >({
       query: (body) => ({
@@ -62,6 +63,7 @@ export const ticketsApi = createApi({
         PageSize?: any;
         SearchTerm?: string;
         TicketTypeId?: any;
+        AttendancePeriod?: any;
       }
     >({
       query: (body) => ({
@@ -151,7 +153,7 @@ export const ticketsApi = createApi({
       query: (body) => ({
         url: `/ticket-types/${body.id}`,
         method: "PUT",
-        body: body.postData,
+        stData,
       }),
       invalidatesTags: [{ type: "ticket-types", id: "LIST" }],
     }),
