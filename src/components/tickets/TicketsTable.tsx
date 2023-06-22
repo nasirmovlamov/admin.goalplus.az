@@ -302,7 +302,7 @@ export const TicketsTable = () => {
             columns={columns}
             data={ticketsData.data.map((ticket: any, index: number) => ({
               ...ticket,
-              index: index + 1,
+              index: (index + 1) * ticketsData.pagination.CurrentPage,
             }))}
             rowKey="id"
             className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
