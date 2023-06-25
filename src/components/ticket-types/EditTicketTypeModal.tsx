@@ -75,6 +75,20 @@ const EditTicketTypeModal = ({
 
   const onSubmit = async (data: any) => {
     try {
+      console.log("data", {
+          name: data.name,
+          active: data.active,
+          description: data.description,
+          dates: dateWeekDays.map((date: any) => {
+            return {
+              startTime: new Date(date?.startDate).toISOString(),
+              endTime: new Date(date?.endDate).toISOString(),
+              weekDays: date?.weekDays,
+            };
+          }),
+          price: data.price,
+          ticketCategory: data.ticketCategory,
+        })
       await ticketTypePostApi({
         id: ticketTypeId,
         postData: {

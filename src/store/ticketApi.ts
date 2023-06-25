@@ -153,7 +153,7 @@ export const ticketsApi = createApi({
       query: (body) => ({
         url: `/ticket-types/${body.id}`,
         method: "PUT",
-        params: body.postData,
+        body: body.postData,
       }),
       invalidatesTags: [{ type: "ticket-types", id: "LIST" }],
     }),
