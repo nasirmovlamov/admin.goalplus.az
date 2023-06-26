@@ -120,76 +120,86 @@ export default function TicketPage() {
 
   return (
     <Layout title="Tickets">
-      <>
-        <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
+      {isTicketSuccess && ticketsData.checked > 0 && (
+        <p className="text-2xl font-semibold text-center text-white bg-red-800 p-10 border-r-2 border-b-2">
           {" "}
-          Ticket Info
+          THIS TICKET HAS BEEN SCANNED ALREADY
         </p>
-        {isTicketTypeLoading ? (
-          <div>Ticket date info is loading...</div>
-        ) : ticketsTypeError ? (
-          <div>Something went wrong while fetching ticket info</div>
-        ) : null}
+      )}
+      {isTicketSuccess && ticketsData.checked < 1 && (
+        <>
+          <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
+            {" "}
+            Ticket Info
+          </p>
+          {isTicketTypeLoading ? (
+            <div>Ticket date info is loading...</div>
+          ) : ticketsTypeError ? (
+            <div>Something went wrong while fetching ticket info</div>
+          ) : null}
 
-        {isTicketTypeSuccess && isTicketSuccess && (
-          <Table
-            columns={[
-              {
-                key: "name",
-                dataIndex: "name",
-                title: "Ticket Type",
-                width: 150,
-                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-              },
-              {
-                key: "id",
-                dataIndex: "id",
-                title: "Ticket id",
-                width: 150,
-                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-              },
-              {
-                key: "price",
-                dataIndex: "price",
-                title: "price",
-                width: 150,
-                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-              },
-              {
-                key: "dates",
-                dataIndex: "dates",
-                title: "dates",
-                width: 150,
-                className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
-                render: (dates: any) => {
-                  console.log("dates", dates[0].startTime);
-                  return (
-                    <span>{dates[ticketsData.attendancePeriod].startTime}</span>
-                  );
+          {isTicketTypeSuccess && isTicketSuccess && (
+            <Table
+              columns={[
+                {
+                  key: "name",
+                  dataIndex: "name",
+                  title: "Ticket Type",
+                  width: 150,
+                  className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
                 },
-              },
-            ]}
-            data={[ticketsTypeData]}
-            className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
-          />
-        )}
+                {
+                  key: "id",
+                  dataIndex: "id",
+                  title: "Ticket id",
+                  width: 150,
+                  className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+                },
+                {
+                  key: "price",
+                  dataIndex: "price",
+                  title: "price",
+                  width: 150,
+                  className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+                },
+                {
+                  key: "dates",
+                  dataIndex: "dates",
+                  title: "dates",
+                  width: 150,
+                  className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
+                  render: (dates: any) => {
+                    console.log("dates", dates[0].startTime);
+                    return (
+                      <span>
+                        {dates[ticketsData.attendancePeriod].startTime}
+                      </span>
+                    );
+                  },
+                },
+              ]}
+              data={[ticketsTypeData]}
+              className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
+            />
+          )}
 
-        <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
-          {" "}
-          Visitor Info
-        </p>
-        {isTicketLoading ? (
-          <div>Visitor Info is loading...</div>
-        ) : ticketsError ? (
-          <div>Something went wrong while fetching visitor info</div>
-        ) : (
-          <Table
-            columns={columns}
-            data={[ticketsData]}
-            className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
-          />
-        )}
-      </>
+          <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
+            {" "}
+            Visitor Info
+          </p>
+          {isTicketLoading ? (
+            <div>Visitor Info is loading...</div>
+          ) : ticketsError ? (
+            <div>Something went wrong while fetching visitor info</div>
+          ) : (
+            <Table
+              columns={columns}
+              data={[ticketsData]}
+              className="bg-[#C4F000] p-4 w-full text-center rc-table-custom font-semibold "
+            />
+          )}
+        </>
+      )}
     </Layout>
   );
 }
