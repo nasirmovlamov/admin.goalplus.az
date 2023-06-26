@@ -120,13 +120,13 @@ export default function TicketPage() {
 
   return (
     <Layout title="Tickets">
-      {isTicketSuccess && ticketsData.checked > 0 && (
+      {isTicketSuccess && ticketsData.checked > 1 && (
         <p className="text-2xl font-semibold text-center text-white bg-red-800 p-10 border-r-2 border-b-2">
           {" "}
           THIS TICKET HAS BEEN SCANNED ALREADY
         </p>
       )}
-      {isTicketSuccess && ticketsData.checked < 1 && (
+      {isTicketSuccess && ticketsData.checked < 2 && (
         <>
           <p className="text-2xl font-semibold text-center text-white bg-gray-800 p-2 border-r-2 border-b-2">
             {" "}
