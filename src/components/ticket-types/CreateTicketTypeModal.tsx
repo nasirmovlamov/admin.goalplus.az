@@ -198,6 +198,11 @@ const CreateTicketTypeModal = ({ modal, setModal }: Props) => {
                   });
                   setSelectDateRangeItem(null);
                   setDateWeekDays(datesWithIds);
+                  dates.sort((a: any, b: any) => {
+                    return a[0] - b[0];
+                  });
+                  console.log("dates", dates);
+
                   setValue("dates", dates);
                 }}
                 multiple
