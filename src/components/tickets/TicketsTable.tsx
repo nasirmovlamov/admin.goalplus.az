@@ -10,6 +10,9 @@ import DeleteTicketSureModal from "./DeleteTicketSureModal";
 import Toggle from "react-toggle";
 import { format, parseISO } from "date-fns";
 import AttendanceChart from "./TicketsChart";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
@@ -222,10 +225,35 @@ export const TicketsTable = () => {
     });
   };
 
+  const handleExportAllTickets = async () => {
+    try {
+      const response = await axios.get(
+        "https://api.goalplus.az/api/tickets/export",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      // create csv file from data
+      const blob = new Blob([response.data], { type: "text/csv" });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      // download file
+      document.body.appendChild(link);
+      link.href = url;
+      link.download = "tickets.csv";
+      link.click();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (isTicketsHeadersSuccess && isTicketsSuccess)
     return (
       <>
-        <AttendanceChart data={ticketsData.data} />
+        {/* <AttendanceChart data={ticketsData.data} /> */}
+
         <DeleteTicketSureModal
           setTicketId={setTicketId}
           ticketId={ticketId}
@@ -391,6 +419,15 @@ export const TicketsTable = () => {
             activeItemClassName="bg-[#C4F000] text-black-ripon"
             navClassName="bg-black-ripon text-[#C4F000]"
           />
+        </div>
+        <div className="w-full flex justify-end my-5">
+          <button
+            className="bg-green-500 p-2 rounded-md cursor-pointer text-white"
+            onClick={handleExportAllTickets}
+          >
+            Export all tickets
+            <FontAwesomeIcon icon={faFileExport} className="ml-2" />
+          </button>
         </div>
       </>
     );
