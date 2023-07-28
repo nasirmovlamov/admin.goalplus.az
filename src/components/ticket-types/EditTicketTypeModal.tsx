@@ -228,14 +228,12 @@ const EditTicketTypeModal = ({
               <div className="flex justify-between flex-col">
                 <label className="font-semibold pr-2">Description</label>
                 <textarea
-                  {...register("description", {
-                    required: true,
-                  })}
+                  {...register("description")}
                   className="border-2 w-full border-[#00A3FF] "
                 />
-                <span className=" text-red-500">
+                {/* <span className=" text-red-500">
                   {errors.description && "Description is required"}
-                </span>
+                </span> */}
               </div>
               <div className="flex justify-between flex-col">
                 <label className="font-semibold pr-2">Price</label>
