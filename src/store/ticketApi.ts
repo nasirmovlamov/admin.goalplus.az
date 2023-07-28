@@ -87,7 +87,7 @@ export const ticketsApi = createApi({
       }
     >({
       query: (body) => ({
-        url: `/ticket-types`,
+        url: `/ticket-types?orderBy=Id`,
         method: "GET",
         params: body,
       }),
