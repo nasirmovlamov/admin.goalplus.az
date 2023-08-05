@@ -320,11 +320,13 @@ export const TicketsTable = () => {
                     >
                       <option value="all">All</option>
 
-                      {ticketsTypeData.map((ticketType: any, index: number) => (
-                        <option key={index} value={ticketType.id}>
-                          {ticketType.name}
-                        </option>
-                      ))}
+                      {ticketsTypeData.data.map(
+                        (ticketType: any, index: number) => (
+                          <option key={index} value={ticketType.id}>
+                            {ticketType.name}
+                          </option>
+                        )
+                      )}
                     </select>
                   </div>
                 ),
@@ -349,7 +351,7 @@ export const TicketsTable = () => {
                         setAttendancePeriodIndex(e.target.value as any);
                       }}
                     >
-                      {ticketsTypeData
+                      {ticketsTypeData.data
                         ?.filter(
                           (ticketType: any) => ticketType.id == ticketTypeId
                         )[0]
