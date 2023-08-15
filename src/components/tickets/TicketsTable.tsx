@@ -13,9 +13,11 @@ import AttendanceChart from "./TicketsChart";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { AsyncPaginate } from "react-select-async-paginate";
 
 export const TicketsTable = () => {
   const [SearchTerm, setSearchTerm] = useState("");
+  const [SelectSearchTerm, setSelectSearchTerm] = useState<any>([]);
   const [ticketId, setTicketId] = useState("");
   const [deleteTicketSureModal, setDeleteTicketSureModal] = useState(false);
   const [ticketTypeId, setTicketTypeId] = useState(null);
@@ -249,6 +251,45 @@ export const TicketsTable = () => {
     }
   };
 
+  async function loadOptions(search: any, loadedOptions: any, { page }: any) {
+    const response = await fetch(
+      `https://api.goalplus.az/api/ticket-types?PageNumber=${page}&PageSize=45&SearchTerm=${search}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    const responseJSON = await response.json();
+    // read headers of X-Pagination
+    const pagination = JSON.parse(response.headers.get("X-Pagination") || "{}");
+    // return formatted data
+    console.log(pagination);
+    const options = responseJSON.map((i: any) => ({
+      value: i.id,
+      label: i.name,
+    }));
+    return {
+      options: options,
+      hasMore: pagination.HasNext,
+      additional: {
+        page: page + 1,
+      },
+    };
+  }
+
+  const hanlePaginatedSelectChange = (item: {
+    label: string;
+    value: string;
+  }) => {
+    getTicketsHeaders({
+      TicketTypeId: item.value,
+    });
+    setAttendancePeriodIndex(null);
+    setTicketTypeId(item.value as any);
+    setSelectSearchTerm(item);
+  };
+
   if (isTicketsHeadersSuccess && isTicketsSuccess)
     return (
       <>
@@ -282,6 +323,8 @@ export const TicketsTable = () => {
                   PageNumber: pagination.CurrentPage,
                   PageSize: pageSize,
                 });
+                setSelectSearchTerm(null);
+                setTicketTypeId(null);
               }}
               className="bg-gray-800 text-white px-2 rounded-md h-[34px]"
             >
@@ -300,7 +343,17 @@ export const TicketsTable = () => {
                 className: "text-white bg-gray-800 p-2 border-r-2 border-b-2",
                 render: () => (
                   <div>
-                    <select
+                    <AsyncPaginate
+                      // options color
+                      className="text-black w-[300px]"
+                      value={SelectSearchTerm}
+                      loadOptions={loadOptions}
+                      onChange={hanlePaginatedSelectChange}
+                      additional={{
+                        page: 1,
+                      }}
+                    />
+                    {/* <select
                       name=""
                       id=""
                       className="text-black w-[300px]"
@@ -327,7 +380,7 @@ export const TicketsTable = () => {
                           </option>
                         )
                       )}
-                    </select>
+                    </select> */}
                   </div>
                 ),
               },
